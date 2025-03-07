@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework import generics
+from .models import Marketer
+from .serializers import MarketerSerializer
 
-# Create your views here.
+
+class MarketerList(generics.ListCreateAPIView):
+    queryset = Marketer.objects.all()
+    serializer_class = MarketerSerializer

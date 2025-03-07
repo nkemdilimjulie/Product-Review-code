@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework import generics
+from .models import Mobiles
+from .serializers import MobileSerializer
 
-# Create your views here.
+
+class MobileList(generics.ListCreateAPIView):
+    queryset = Mobiles.objects.all()
+    serializer_class = MobileSerializer

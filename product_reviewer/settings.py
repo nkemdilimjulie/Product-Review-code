@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     # Third-party apps
     "rest_framework",
     # Custom apps
@@ -45,6 +44,7 @@ INSTALLED_APPS = [
     "mobiles",
     "reviews",
     "marketers",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
@@ -87,17 +87,19 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
+# 
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST"),
-        "PORT": os.getenv("DB_PORT"),
+        "NAME": "myproject",  # Database name
+        "USER": "myprojectuser",  # Database user
+        "PASSWORD": "password",  # Database password
+        "HOST": "localhost",  # Use '127.0.0.1' if localhost doesn't work
+        "PORT": "5432",  # Default PostgreSQL port
     }
 }
-
+print(DATABASES)
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -149,3 +151,5 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ],
 }
+
+AUTH_USER_MODEL = "accounts.CustomUser"
