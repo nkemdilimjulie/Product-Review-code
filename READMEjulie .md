@@ -71,3 +71,9 @@ self.response_text[:50]: Displays the first 50 characters of the response text. 
 
     + Exposes an API endpoint for MarketerList (/api/marketers/).
     + Uses format_suffix_patterns() to support optional format suffixes (e.g., .json, .api).
+
+These `admin.py` files will:
+
++ Register your models in Django Admin.
++ Allow easy searching, filtering, and displaying related fields.
++ Handle ManyToManyField relationships efficiently.

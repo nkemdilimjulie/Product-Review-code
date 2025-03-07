@@ -35,10 +35,10 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/accounts/', include('accounts.urls')),
-    path('api/mobiles/', include('mobiles.urls')),
-    path('api/reviews/', include('reviews.urls')),
-    path('api/marketers/', include('marketers.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('mobiles/', include('mobiles.urls')),
+    path('reviews/', include('reviews.urls')),
+    path('marketers/', include('marketers.urls')),
     
     # Swagger UI and ReDoc
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'),

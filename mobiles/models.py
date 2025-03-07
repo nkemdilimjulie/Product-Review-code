@@ -16,8 +16,8 @@ class Mobiles(models.Model):
     model = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
     marketers = models.ManyToManyField(
-        "marketers.Marketer", related_name="marketed_mobiles"
-    )  # Many-to-Many
+        "marketers.Marketer", related_name="marketed_mobiles", blank=True
+    )
 
     def __str__(self):
         return f"{self.brand} {self.model}"
