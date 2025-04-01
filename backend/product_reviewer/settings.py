@@ -158,7 +158,12 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',  # React frontend development server
+    "http://localhost:3000",  # Old React port
+    "http://localhost:5173",  # Default Vite port
+    "http://localhost:5174",  # Current running Vite port
 ]
 
+
+# LOGIN_REDIRECT_URL = 'home'
+# LOGOUT_REDIRECT_URL = 'home'
 
