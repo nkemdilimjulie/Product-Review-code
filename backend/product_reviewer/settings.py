@@ -45,9 +45,11 @@ INSTALLED_APPS = [
     "reviews",
     "marketers",
     "drf_yasg",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -121,7 +123,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = 'Europe/Berlin'  # Change this to your local timezone
+USE_TZ = True
+
+# TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -150,3 +155,10 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',  # React frontend development server
+]
+
+
