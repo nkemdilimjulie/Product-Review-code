@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Third-party apps
     "rest_framework",
+    "rest_framework_simplejwt",
     # Custom apps
     "accounts",
     "mobiles",
@@ -148,6 +149,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
@@ -166,4 +168,30 @@ CORS_ALLOWED_ORIGINS = [
 
 # LOGIN_REDIRECT_URL = 'home'
 # LOGOUT_REDIRECT_URL = 'home'
+
+
+# Import the required module for environment variable management
+import environ
+from datetime import timedelta
+
+# Initialize the environment
+env = environ.Env()
+environ.Env.read_env(env_file='.env')   # Read environment variables from .env file
+
+# Get the secret key securely from the .env file
+SECRET_KEY1 = env('DJANGO_SECRET_KEY')
+
+# JWT Configuration
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),  # Set token lifetime to 1 hour
+    'ROTATE_REFRESH_TOKENS': True,  # Rotate refresh tokens
+    'BLACKLIST_AFTER_ROTATION': True,  # Blacklist refresh tokens after rotation
+    'ALGORITHM': 'HS256',  # JWT signing algorithm
+    'SIGNING_KEY': SECRET_KEY1,  # Use the secret key from the .env file
+    'VERIFYING_KEY': None,  # Not needed for HS256
+    'AUTH_HEADER_TYPES': ('Bearer',),  # Standard header type
+}
+
+
+
 

@@ -1,0 +1,5 @@
+.venv
+READMEjulie.md
+frontend/node_modules/
+
+*.pyc

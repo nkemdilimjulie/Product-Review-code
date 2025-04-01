@@ -1,4 +1,4 @@
-## To Fetch (Fixed) Data from Backend API
+# To Fetch (Fixed) Data from Backend API
 `Use these Statements:` 
 ```
 VITE_API_URL="http://localhost:8000/api"
@@ -51,7 +51,7 @@ const FetchBackendApiData = () => {
 export default FetchBackendApiData;
 ```
 
-# To Call the FetchBackendApiData Function in App.tsx (React Dashboard)
+## To Call the FetchBackendApiData Function in App.tsx (React Dashboard)
 
 **App.tsx**
 
@@ -79,7 +79,7 @@ One of the changes involve, changing
 
 **fetch(`${apiUrl}/items/`)** to **fetch(`${apiUrl}/${endpoint}`)**, 
 
-where {endpoint} can be defined differently:
+where {endpoint} can be defined differently as shown below:
 
 Which Method Should You Use? 
 + 1️⃣ If the endpoint changes based on a dropdown or button click → Use state (useState)
@@ -92,7 +92,14 @@ Which Method Should You Use?
 
 ### Fetch (Dynamic) Data from Backend API (Method 1)
 1️⃣ If the endpoint changes based on a dropdown or button click → Use state (useState)
-If the endpoint should change based on user input, store it in a state using a `State Variable`
+If the endpoint should change based on user input, store it in a state using a `State Variable`. This method does not need to called. You can use it as an App.tsx.
+
+✅ Why Use a State Variable?
+Dynamic Fetching: The API endpoint updates dynamically based on user actions.
+
+Reactivity: useEffect re-runs when endpoint changes, fetching new data.
+
+User Control: The user can switch between different API data sources (e.g., items, products).
 
 ✅ Example with a dropdown:
 
@@ -184,12 +191,7 @@ const FetchBackendApiData = () => {
 export default FetchBackendApiData;
 
 ```
-✅ Why Use a State Variable?
-Dynamic Fetching: The API endpoint updates dynamically based on user actions.
 
-Reactivity: useEffect re-runs when endpoint changes, fetching new data.
-
-User Control: The user can switch between different API data sources (e.g., items, products).
 
 ### Fetch (Dynamic) Data from Backend API (Method 2)
 2️⃣ If the endpoint is passed as a **prop** (Properties) to the component → Use **Props**
