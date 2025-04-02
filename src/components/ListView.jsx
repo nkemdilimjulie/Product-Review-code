@@ -3,13 +3,13 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';  // For routing to DetailView
 
 const ListView = () => {
-  const [todos, setTodos] = useState([]);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     // Fetch the list of todos from the Django API
-    axios.get('http://localhost:8000/api/')
+      axios.get('http://localhost:8000/api/mobiles/')
       .then((response) => {
-        setTodos(response.data);
+        setReviews(response.data);
         console.log(response.data)
       })
       .catch((error) => {
@@ -19,14 +19,15 @@ const ListView = () => {
 
   return (
     <div>
-      <h1>Todo List</h1>
+      <h1>Review List</h1>
       <ul>
-        {todos.map((todo, index) => (
-          <li key={todo.id}>
-            <Link to={`/${todo.id}`}>
-              <h3>{todo.title}</h3>
-            </Link>
-            <p>{todo.body}</p>
+        {reviews.map((todo, index) => (
+          <li key={todo.ean}>
+              <Link to={`/mobile/${todo.ean}`}>
+              <h3>{todo.model}</h3>
+          </Link>
+            <h3>{todo.model}</h3>
+            <p>{todo.description}</p>
           </li>
         ))}
       </ul>

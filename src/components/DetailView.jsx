@@ -4,26 +4,28 @@ import axios from 'axios';
 
 const DetailView = () => {
   const { id } = useParams();  // Get `id` from the URL parameters
-  const [todo, setTodo] = useState(null);
+  const [review, setReview] = useState(null);
 
   useEffect(() => {
     // Fetch the details of a specific todo
-    axios.get(`http://localhost:8000/api/${id}/`)
+      axios.get(`http://localhost:8000/api/mobiles/${id}/`)
       .then((response) => {
         console.log(response.data);
-        setTodo(response.data);
+        setReview(response.data);
       })
       .catch((error) => {
         console.error('Error fetching todo details:', error);
       });
   }, [id]);
 
-  if (!todo) return <p>Loading...</p>;
+  if (!review) return <p>Loading...</p>;
 
   return (
     <div>
-      <h1>{todo.title}</h1>
-      <p>{todo.body}</p>
+      <h1>{review.ean}</h1>
+      <p>{review.model}</p>
+      <p>{review.brand}</p>
+      <p>{review.description}</p>
     </div>
   );
 };
