@@ -46,7 +46,7 @@ const ListView = () => {
 
   useEffect(() => {
     // Fetch the list of mobiles from the Django API
-      axios.get('http://localhost:8000/api/mobiles/')
+      axios.get('http://localhost:8080/api/mobiles/')
       .then((response) => {
         setReviews(response.data);
         console.log(response.data)
