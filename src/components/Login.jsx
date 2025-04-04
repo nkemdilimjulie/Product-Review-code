@@ -4,17 +4,30 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState(""); // Changed from email to username
   const [password, setPassword] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     try {
-      const response = await axios.post("http://localhost:8000/admin/login/", { email, password });
-      login(response.data.token); // Assuming the token is in response.data.token
-      navigate("http://localhost:8000/api/marketers/"); // ✅ Corrected incorrect URL from previous code
+      const response = await axios.post("http://localhost:8080/admin/login/", { username, password });
+      
+      // Assuming the response contains a token and user data
+      const { token, is_marketer, is_admin } = response.data;
+      login(token); // Save token for authentication
+
+      // Determine the redirect path
+      if (is_admin) {
+        navigate("http://localhost:8080/admin/login");
+      } else if (is_marketer) {
+        navigate("http://localhost:8080/api/marketers/");
+      } else {
+        navigate("http://localhost:8080/api/reviews/");
+      }
+
     } catch (error) {
       console.error("Login failed", error);
     }
@@ -25,13 +38,13 @@ const Login = () => {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email</label>
+          <label htmlFor="username" className="form-label">Username</label>
           <input 
-            type="email" 
+            type="text" 
             className="form-control" 
-            id="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
+            id="username" 
+            value={username} 
+            onChange={(e) => setUsername(e.target.value)} 
             required 
           />
         </div>
@@ -53,5 +66,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
