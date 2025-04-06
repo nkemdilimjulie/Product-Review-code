@@ -32,6 +32,7 @@ import MarketersListView from "./components/MarketersListView";
 import DetailView from "./components/DetailView";
 import SuccessLogin from "./components/SuccessLogin";
 import ReviewMobile from "./components/ReviewMobile"; 
+import ReviewMore from "./components/ReviewMore"; 
 import CreateTodo from "./components/CreateTodo";
 import UpdateTodo from "./components/UpdateTodo";
 import DeleteTodo from "./components/DeleteTodo";
@@ -52,6 +53,7 @@ const App = () => {
           <Route path="/marketer/" element={<MarketersListView />} />
           <Route path="/marketers/" element={<MarketersList/>} />
           <Route path="/success" element={<SuccessLogin />} />
+          <Route path="/reviewmore" element={<ReviewMore />} />
           <Route path="/marketer/:id/" element={<MarketersDetailView />} /> {/* ✅ Fixed path */}
           <Route path="/reviews" element={<ReviewMobile />} />
           {/* Protected Routes */}

@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ReviewMobile = () => {
+  const [phones, setPhones] = useState([]);
   const [formData, setFormData] = useState({
     phone: "",
     body: "",
     author: "",
-    created_at: "",
+    created_at: new Date().toISOString(),
     seller: "",
     price: "",
     rate: "",
   });
 
-  const [phones, setPhones] = useState([]); // Assume phones come from backend
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPhones = async () => {
@@ -23,43 +25,47 @@ const ReviewMobile = () => {
         console.error("Failed to fetch phones:", error);
       }
     };
+
+    const username = localStorage.getItem("username");
+    setFormData((prev) => ({
+      ...prev,
+      author: username || "",
+    }));
+
     fetchPhones();
   }, []);
 
   const handleChange = (e) => {
-    setFormData({ 
-      ...formData, 
-      [e.target.name]: e.target.value 
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await axios.post("http://localhost:8080/api/reviews/", formData);
-      alert("Review submitted successfully!");
-      setFormData({
-        phone: "",
-        body: "",
-        author: "",
-        created_at: "",
-        seller: "",
-        price: "",
-        rate: "",
+      await axios.post("http://localhost:8080/api/reviews/", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
       });
+      alert("Review submitted!");
+      navigate("/review-more");
     } catch (error) {
-      console.error("Failed to submit review:", error);
+      console.error("Error submitting review:", error);
     }
   };
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4">📱 Review a Mobile</h2>
+      <h2>📱 Review a Mobile</h2>
       <form onSubmit={handleSubmit}>
         {/* Phone Dropdown */}
         <div className="mb-3">
-          <label htmlFor="phone" className="form-label">Phone</label>
-          <select 
+          <label className="form-label">Phone</label>
+          <select
             className="form-select"
             name="phone"
             value={formData.phone}
@@ -69,95 +75,79 @@ const ReviewMobile = () => {
             <option value="">Select a Phone</option>
             {phones.map((phone) => (
               <option key={phone.id} value={phone.id}>
-                {phone.name}
+                {phone.brand} - {phone.model}
               </option>
             ))}
           </select>
         </div>
 
-        {/* Body Text */}
+        {/* Body */}
         <div className="mb-3">
-          <label htmlFor="body" className="form-label">Review</label>
-          <textarea 
+          <label className="form-label">Review</label>
+          <textarea
             className="form-control"
             name="body"
+            rows="4"
             value={formData.body}
             onChange={handleChange}
-            rows="4"
             required
-          />
+          ></textarea>
         </div>
 
-        {/* Author */}
+        {/* Author (auto-filled) */}
         <div className="mb-3">
-          <label htmlFor="author" className="form-label">Author</label>
-          <input 
-            type="text" 
-            className="form-control" 
-            name="author" 
+          <label className="form-label">Author</label>
+          <input
+            className="form-control"
+            type="text"
+            name="author"
             value={formData.author}
-            onChange={handleChange}
-            required 
-          />
-        </div>
-
-        {/* Created At */}
-        <div className="mb-3">
-          <label htmlFor="created_at" className="form-label">Date</label>
-          <input 
-            type="date" 
-            className="form-control" 
-            name="created_at" 
-            value={formData.created_at}
-            onChange={handleChange}
-            required 
+            readOnly
           />
         </div>
 
         {/* Seller */}
         <div className="mb-3">
-          <label htmlFor="seller" className="form-label">Seller</label>
-          <input 
-            type="text" 
-            className="form-control" 
-            name="seller" 
+          <label className="form-label">Seller</label>
+          <input
+            className="form-control"
+            type="text"
+            name="seller"
             value={formData.seller}
             onChange={handleChange}
-            required 
+            required
           />
         </div>
 
         {/* Price */}
         <div className="mb-3">
-          <label htmlFor="price" className="form-label">Price ($)</label>
-          <input 
-            type="number" 
-            className="form-control" 
-            name="price" 
+          <label className="form-label">Price ($)</label>
+          <input
+            className="form-control"
+            type="number"
+            name="price"
             value={formData.price}
             onChange={handleChange}
-            required 
+            required
           />
         </div>
 
         {/* Rate */}
         <div className="mb-3">
-          <label htmlFor="rate" className="form-label">Rate (1–5)</label>
-          <input 
-            type="number" 
-            className="form-control" 
-            name="rate" 
+          <label className="form-label">Rate (1–5)</label>
+          <input
+            className="form-control"
+            type="number"
+            name="rate"
             value={formData.rate}
             onChange={handleChange}
             min="1"
             max="5"
-            required 
+            required
           />
         </div>
 
-        <button type="submit" className="btn btn-success">
-          ✅ Submit Review
-        </button>
+        <button className="btn btn-success" type="submit">✅ Submit Review</button>
       </form>
     </div>
   );

@@ -73,3 +73,38 @@ const styles = {
     cursor: "pointer",
   },
 };
+
+
+// import React from "react";
+// import { useNavigate } from "react-router-dom";
+
+// const SuccessLogin = () => {
+//   const navigate = useNavigate();
+
+//   const handleLogout = () => {
+//     localStorage.clear();
+//     navigate("/login");
+//   };
+
+//   return (
+//     <div className="container mt-5 text-center">
+//       <h2 className="mb-4">✅ Successfully Logged In!</h2>
+
+//       <div className="d-grid gap-3 col-6 mx-auto">
+//         <button className="btn btn-primary" onClick={() => navigate("/marketers")}>
+//           📋 Marketers List
+//         </button>
+
+//         <button className="btn btn-warning" onClick={() => navigate("/reviews")}>
+//           💬 Review Mobiles
+//         </button>
+
+//         <button className="btn btn-danger" onClick={handleLogout}>
+//           🚪 Logout
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default SuccessLogin;
