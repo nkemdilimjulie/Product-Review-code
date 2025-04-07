@@ -1,0 +1,50 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .hero-section {
+    background: #f8f9fa;
+    padding: 50px 0;
+  }
+  
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
+  
+  .nav-link {
+    font-size: 1rem;
+  }
+  
+  .card-title {
+    font-weight: bold;
+  }
+  
+  /* Form Styling */
+  .form-control {
+    margin-bottom: 10px;
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .text-center {
+    animation: fadeIn 1s ease-in-out;
+  }
+  

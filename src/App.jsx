@@ -18,7 +18,6 @@
 // };
 
 // export default App;
-
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
@@ -26,6 +25,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Help from "./components/Help"; 
 import ListView from "./components/ListView";
 import MarketersList from "./components/MarketersList";
 import MarketersListView from "./components/MarketersListView";
@@ -39,6 +39,7 @@ import CreateTodo from "./components/CreateTodo";
 import UpdateTodo from "./components/UpdateTodo";
 import DeleteTodo from "./components/DeleteTodo";
 import MarketersDetailView from "./components/MarketersDetailView"; 
+
 const App = () => {
   return (
     <AuthProvider>
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/help" element={<Help />} />
 
           {/* Public Views */}
           <Route path="/mobile/" element={<ListView />} />
