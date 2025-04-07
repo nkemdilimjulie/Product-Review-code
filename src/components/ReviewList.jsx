@@ -63,6 +63,7 @@
 
 
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const phoneLookup = {
   1: "Samsung - Galaxy S21",
@@ -72,11 +73,22 @@ const phoneLookup = {
 
 const ReviewList = () => {
   const [reviews, setReviews] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedReviews = JSON.parse(localStorage.getItem("review-mobile")) || [];
     setReviews(savedReviews);
   }, []);
+
+  const handleReviewMore = () => {
+    navigate("/review-more");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("username");
+    navigate("/");
+  };
 
   return (
     <div className="container mt-4">
@@ -86,7 +98,7 @@ const ReviewList = () => {
       ) : (
         <ul className="list-group">
           {reviews.map((review, index) => (
-            <li key={index} className="list-group-item">
+            <li key={index} className="list-group-item mb-3">
               <h5>
                 <strong>#{index + 1}</strong> – {phoneLookup[review.phone] || "Unknown Phone"}
               </h5>
@@ -100,9 +112,18 @@ const ReviewList = () => {
           ))}
         </ul>
       )}
+
+      {/* Action Buttons */}
+      <div className="mt-4 d-flex gap-3">
+        <button className="btn btn-success" onClick={handleReviewMore}>
+          ➕ Review More
+        </button>
+        <button className="btn btn-danger" onClick={handleLogout}>
+          🚪 Logout
+        </button>
+      </div>
     </div>
   );
 };
 
 export default ReviewList;
-
