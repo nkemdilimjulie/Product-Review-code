@@ -89,13 +89,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles.css";  // Import your custom CSS for animations
 
+
+
 const Home = () => {
   return (
     <div className="container">
       {/* Navigation Bar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">MyProject</Link>
+          {/* <Link className="navbar-brand" to="/">MyProject</Link> */}
+          <img src="public/mobile7.jpeg" className="login-img-top" alt="login" style={{ width: "70px", height: "auto" }} />
+          <img src="public/mobile2.webp" className="login-img-top" alt="login" style={{ width: "60px", height: "auto" }} />
+          <img src="public/mobile3.jpeg" className="login-img-top" alt="login" style={{ width: "150px", height: "auto" }} />
+          <img src="public/mobile4.jpeg" className="login-img-top" alt="login" style={{ width: "50px", height: "auto" }} />
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -105,7 +111,7 @@ const Home = () => {
                 <Link className="nav-link active" aria-current="page" to="/">Home</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about-us">About Us</Link>
+                <Link className="nav-link" to="/aboutus">About Us</Link>
               </li>
             </ul>
           </div>
@@ -122,7 +128,7 @@ const Home = () => {
       <div className="row row-cols-1 row-cols-md-3 g-4 mt-4">
         <div className="col">
           <div className="card shadow-lg">
-            <img src="https://via.placeholder.com/300x200" className="card-img-top" alt="login" />
+            <img src="public/login.jpeg" className="login-img-top" alt="login" style={{ width: "60px", height: "auto" }} />
             <div className="card-body">
               <h5 className="card-title">Login</h5>
               <p className="card-text">Gives you right to review our products</p>
@@ -132,7 +138,7 @@ const Home = () => {
         </div>
         <div className="col">
           <div className="card shadow-lg">
-            <img src="https://via.placeholder.com/300x200" className="card-img-top" alt="register" />
+            <img src="public/register.jpeg" className="card-img-top" alt="register" style={{ width: "60px", height: "auto" }} />
             <div className="card-body">
               <h5 className="card-title">Register</h5>
               <p className="card-text">Sign up an account with us</p>
@@ -142,7 +148,7 @@ const Home = () => {
         </div>
         <div className="col">
           <div className="card shadow-lg">
-            <img src="https://via.placeholder.com/300x200" className="card-img-top" alt="help" />
+            <img src="public/help.jpg" className="card-img-top" alt="help" style={{ width: "60px", height: "auto" }} />
             <div className="card-body">
               <h5 className="card-title">Get Help</h5>
               <p className="card-text">Get some directions on how to review our products</p>
