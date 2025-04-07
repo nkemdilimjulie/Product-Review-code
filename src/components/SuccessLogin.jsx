@@ -82,8 +82,8 @@ const SuccessLogin = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.clear();
-    navigate("/login");
+    // localStorage.clear();
+    navigate("/");
   };
 
   return (

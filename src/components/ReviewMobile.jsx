@@ -7,7 +7,7 @@ const ReviewMobile = () => {
     phone: "",
     body: "",
     author: "",
-    created_at: new Date().toISOString(),
+    created_at: new Date().toLocaleString(),
     seller: "",
     price: "",
     rate: "",
@@ -52,18 +52,28 @@ const ReviewMobile = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("username");
+    // localStorage.removeItem("accessToken");
+    // localStorage.removeItem("username");
     navigate("/");
+  };
+
+  const goToReviewList = () => {
+    navigate("/review-list");
   };
 
   return (
     <div className="container mt-4">
-      <div className="d-flex justify-content-between align-items-center">
+      {/* Header Buttons */}
+      <div className="d-flex justify-content-between align-items-center mb-3">
         <h2>📱 Review a Mobile</h2>
-        <button className="btn btn-outline-danger" onClick={handleLogout}>
-          🚪 Logout
-        </button>
+        <div>
+          <button className="btn btn-outline-primary me-2" onClick={goToReviewList}>
+            📋 Review List
+          </button>
+          <button className="btn btn-outline-danger" onClick={handleLogout}>
+            🚪 Logout
+          </button>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit}>

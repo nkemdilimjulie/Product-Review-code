@@ -114,8 +114,8 @@ const Home = () => {
 
       {/* Hero Section */}
       <div className="hero-section text-center">
-        <h1>Welcome to MyProject</h1>
-        <p>Discover our services and features.</p>
+        <h1>Welcome to our Product Review Community</h1>
+        <p>A TarasJulie Product Selection Scheme</p>
       </div>
 
       {/* Feature Cards Section */}

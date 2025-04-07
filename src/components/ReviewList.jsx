@@ -85,8 +85,8 @@ const ReviewList = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("username");
+    // localStorage.removeItem("accessToken");
+    // localStorage.removeItem("username");
     navigate("/");
   };
 

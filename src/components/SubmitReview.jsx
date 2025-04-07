@@ -62,45 +62,32 @@
 
 // export default SubmitReview;
 
-
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const SubmitReview = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState(null);
   const [submitted, setSubmitted] = useState(false);
 
-  // Load review data from localStorage
   useEffect(() => {
-    const localData = localStorage.getItem("reviewData");
-    if (localData) {
-      setFormData(JSON.parse(localData));
+    const passedReview = location.state;
+    if (passedReview) {
+      setFormData(passedReview);
     } else {
       alert("No review data found. Please fill the form again.");
       navigate("/review-mobile");
     }
-  }, [navigate]);
+  }, [location.state, navigate]);
 
-  const handleReviewMore = () => {
-    navigate("/review-more");
-  };
+  const handleReviewMore = () => navigate("/review-more");
 
-  const handleReviewList = () => {
-    navigate("/review-list");
-  };
+  const handleReviewList = () => navigate("/review-list");
 
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("username");
-    navigate("/login");
-  };
+  const handleLogout = () => navigate("/");
 
-  const handleSubmit = () => {
-    setSubmitted(true);
-    // Optionally clear reviewData if desired
-    // localStorage.removeItem("reviewData");
-  };
+  const handleSubmit = () => setSubmitted(true);
 
   if (!formData) return <p>Loading review data...</p>;
 
@@ -111,7 +98,7 @@ const SubmitReview = () => {
 
       {!submitted ? (
         <button className="btn btn-primary mt-3" onClick={handleSubmit}>
-          ✅ Save Review 
+          ✅ Save Review
         </button>
       ) : (
         <div className="mt-4 d-flex flex-wrap gap-3">

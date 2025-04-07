@@ -35,9 +35,9 @@ import ReviewMobile from "./components/ReviewMobile";
 import SubmitReview from "./components/SubmitReview"; 
 import ReviewMore from "./components/ReviewMore"; 
 import ReviewList from "./components/ReviewList"; 
-import CreateTodo from "./components/CreateTodo";
-import UpdateTodo from "./components/UpdateTodo";
-import DeleteTodo from "./components/DeleteTodo";
+// import CreateTodo from "./components/CreateTodo";
+// import UpdateTodo from "./components/UpdateTodo";
+// import DeleteTodo from "./components/DeleteTodo";
 import MarketersDetailView from "./components/MarketersDetailView"; 
 
 const App = () => {
@@ -64,9 +64,9 @@ const App = () => {
           <Route path="/review-list" element={<ReviewList />} />
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/create-todo" element={<CreateTodo />} />
+            {/* <Route path="/create-todo" element={<CreateTodo />} />
             <Route path="/update-todo/:id" element={<UpdateTodo />} />
-            <Route path="/delete-todo/:id" element={<DeleteTodo />} />
+            <Route path="/delete-todo/:id" element={<DeleteTodo />} /> */}
           </Route>
         </Routes>
       </Router>

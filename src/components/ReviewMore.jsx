@@ -16,9 +16,9 @@ const ReviewMore = () => {
 
   const handleLogout = () => {
     // Clear the user's session (localStorage) and navigate to login page
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("username");
-    navigate("/login");
+    // localStorage.removeItem("accessToken");
+    // localStorage.removeItem("username");
+    navigate("/");
   };
 
   return (

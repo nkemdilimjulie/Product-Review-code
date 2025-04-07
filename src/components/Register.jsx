@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";  // ✅ Import auth context
 
 const Register = () => {
   const [username, setUsername] = useState("");
-  const [password1, setPassword1] = useState("");  // password1 state
-  const [password2, setPassword2] = useState("");  // password2 state
-  const [isMarketer, setIsMarketer] = useState(false);  // Marketer checkbox state
-  const [error, setError] = useState("");  // Error state
-  const [success, setSuccess] = useState("");  // Success state
-  const navigate = useNavigate();  // Used for navigation after registration
+  const [password1, setPassword1] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [isMarketer, setIsMarketer] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {  
-    e.preventDefault();  // Prevents default form submission
-    setError("");  // Reset error messages
-    setSuccess("");  // Reset success message
+  const { isAuthenticated, logout } = useAuth();  // ✅ Use auth context
 
-    // Check if passwords match before submitting
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
     if (password1 !== password2) {
       setError("Passwords do not match.");
       return;
@@ -25,20 +27,18 @@ const Register = () => {
     try {
       const response = await axios.post("http://localhost:8080/api/users/registration/", {
         username,
-        password1,  // Send password1
-        password2,  // Send password2
-        is_marketer: isMarketer,  // Send marketer flag
+        password1,
+        password2,
+        is_marketer: isMarketer,
       });
 
       console.log("Registration successful:", response.data);
       setSuccess("Registration successful! Redirecting to login...");
 
-      // Redirect to Login Page after 1.5 seconds
       setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
       console.error("Registration failed", err.response?.data || err.message);
 
-      // Handle errors and set them to display
       const errorMessage =
         err.response?.data?.username?.[0] ||
         err.response?.data?.password1?.[0] ||
@@ -46,12 +46,27 @@ const Register = () => {
         err.response?.data?.non_field_errors?.[0] ||
         "Registration failed. Please try again.";
 
-      setError(errorMessage);  // Display error message
+      setError(errorMessage);
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    localStorage.clear();
+    navigate("/");
+  };
+
   return (
-    <div className="container">
+    <div className="container mt-4">
+      {/* ✅ Logout button if already authenticated */}
+      {isAuthenticated && (
+        <div className="d-flex justify-content-end">
+          <button className="btn btn-outline-danger mb-3" onClick={handleLogout}>
+            🔒 Logout
+          </button>
+        </div>
+      )}
+
       <h2>Register</h2>
 
       {error && <div className="alert alert-danger">{error}</div>}
@@ -69,6 +84,7 @@ const Register = () => {
             required
           />
         </div>
+
         <div className="mb-3">
           <label htmlFor="password1" className="form-label">Password</label>
           <input
@@ -80,6 +96,7 @@ const Register = () => {
             required
           />
         </div>
+
         <div className="mb-3">
           <label htmlFor="password2" className="form-label">Confirm Password</label>
           <input
@@ -92,7 +109,6 @@ const Register = () => {
           />
         </div>
 
-        {/* Checkbox for Marketer Account */}
         <div className="mb-3 form-check">
           <input
             type="checkbox"
