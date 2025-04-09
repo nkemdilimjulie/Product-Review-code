@@ -29,6 +29,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Help from "./components/Help"; 
 import ListView from "./components/ListView";
+import Marketers from "./components/Marketers";
 import MarketersList from "./components/MarketersList";
 import MarketersListView from "./components/MarketersListView";
 import DetailView from "./components/DetailView";
@@ -58,7 +59,8 @@ const App = () => {
           <Route path="/mobile/" element={<ListView />} />
           <Route path="/mobile/:id/" element={<DetailView />} />
           <Route path="/marketer/" element={<MarketersListView />} />
-          <Route path="/marketers/" element={<MarketersList/>} />
+          <Route path="/marketers-list" element={<MarketersList />} />
+          <Route path="/marketers" element={<Marketers />} />
           <Route path="/success" element={<SuccessLogin />} />
           <Route path="/review-more" element={<ReviewMore />} />
           <Route path="/submit-review" element={<SubmitReview />} />

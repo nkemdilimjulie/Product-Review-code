@@ -132,7 +132,7 @@ const Home = () => {
             <div className="card-body">
               <h5 className="card-title">Login</h5>
               <p className="card-text">Gives you right to review our products</p>
-              <Link to="/login" className="btn btn-primary">Learn More</Link>
+              <Link to="/login" className="btn btn-primary">Login</Link>
             </div>
           </div>
         </div>
@@ -142,7 +142,7 @@ const Home = () => {
             <div className="card-body">
               <h5 className="card-title">Register</h5>
               <p className="card-text">Sign up an account with us</p>
-              <Link to="/register" className="btn btn-primary">Learn More</Link>
+              <Link to="/register" className="btn btn-primary">Register</Link>
             </div>
           </div>
         </div>
@@ -152,7 +152,7 @@ const Home = () => {
             <div className="card-body">
               <h5 className="card-title">Get Help</h5>
               <p className="card-text">Get some directions on how to review our products</p>
-              <Link to="/help" className="btn btn-primary">Learn More</Link>
+              <Link to="/help" className="btn btn-primary">Help Me</Link>
             </div>
           </div>
         </div>
