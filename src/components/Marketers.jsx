@@ -1,83 +1,104 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
 
-const Marketers = () => {
-  const [company, setCompany] = useState("");
-  const [link, setLink] = useState("");
-  const { token } = JSON.parse(localStorage.getItem("user")) || {};
-  const navigate = useNavigate();
+function Marketers() {
+  const [phones, setPhones] = useState([]); // State to store the list of available phones
+  const [selectedPhone, setSelectedPhone] = useState(''); // State to store selected phone (ID)
+  const [company, setCompany] = useState('');
+  const [link, setLink] = useState('');
 
-  const handleSubmit = async (e) => {
+  // Fetch the available phones from the API
+  useEffect(() => {
+    console.log(localStorage.getItem('jwt_token'))
+    fetch('http://127.0.0.1:8080/api/mobiles/', {  // Ensure this URL is correct
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${localStorage.getItem('jwt_token')}`  // Ensure the token is sent
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('mydata', data); // Check the structure of the response
+        if (Array.isArray(data)) {
+          setPhones(data);  // Make sure the response is an array
+        } else {
+          console.error("Received data is not an array", data);
+        }
+      })
+      .catch((error) => console.error("Error fetching phones:", error));
+  }, []);
+  
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8080/api/marketers/",
-        {
-          company,
-          link,
-        },
-        {
-          headers: {
-            Authorization: `Token ${token}`,  // Use Token for Authentication
-          },
-        }
-      );
-
-      console.log("Marketer Submitted:", response.data);
-      alert("Marketer data submitted successfully!");
-      setCompany("");
-      setLink("");
-    } catch (error) {
-      console.error("Error submitting marketer data:", error);
-      alert("Failed to submit marketer data. Please try again.");
-    }
+    const formData = {
+      phone: selectedPhone, // The selected phone's ean (ID)
+      company,
+      link,
+    };
+    console.log('formData', formData)
+    // Now submit the form data to your API endpoint for Marketer
+    fetch('http://127.0.0.1:8080/api/marketers/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${localStorage.getItem('jwt_token')}`, // Assuming you're using DRF token authentication
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data (e.g., show success message or reset form)
+        console.log('Marketer submitted:', data);
+      })
+      .catch((error) => console.error('Error submitting marketer:', error));
   };
 
   return (
-    <div className="container mt-4">
-      <h2>Marketers</h2>
-
-      {/* Marketer Submission Form */}
+    <div>
+      <h1>Submit Marketer Info</h1>
       <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Company</label>
+        <div>
+          <label>Company:</label>
           <input
             type="text"
-            className="form-control"
             value={company}
             onChange={(e) => setCompany(e.target.value)}
             required
           />
         </div>
 
-        <div className="mb-3">
-          <label className="form-label">Link</label>
+        <div>
+          <label>Phone:</label>
+          <select
+            value={selectedPhone}
+            onChange={(e) => setSelectedPhone(e.target.value)}
+            required
+          >
+            <option value="">-- Select Phone --</option>
+            {phones.map((phone) => (
+              <option key={phone.ean} value={phone.ean}>
+                {phone.brand} {phone.model}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label>Link:</label>
           <input
             type="url"
-            className="form-control"
             value={link}
             onChange={(e) => setLink(e.target.value)}
             required
           />
         </div>
 
-        <button className="btn btn-primary">Submit Marketer</button>
+        <button type="submit">Submit Marketer</button>
       </form>
-
-      {/* Buttons to navigate */}
-      <div className="mt-3">
-        <button
-          className="btn btn-secondary mr-2"
-          onClick={() => navigate("/marketerslist")}
-        >
-          Marketers List
-        </button>
-      </div>
     </div>
   );
-};
-
+}
 
 export default Marketers;
