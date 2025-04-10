@@ -30,6 +30,7 @@ import Register from "./components/Register";
 import Help from "./components/Help"; 
 import ListView from "./components/ListView";
 import Marketers from "./components/Marketers";
+import Reviewers from "./components/Reviewers";
 import MarketersList from "./components/MarketersList";
 import MarketersListView from "./components/MarketersListView";
 import DetailView from "./components/DetailView";
@@ -61,6 +62,7 @@ const App = () => {
           <Route path="/marketer/" element={<MarketersListView />} />
           <Route path="/marketers-list" element={<MarketersList />} />
           <Route path="/marketers" element={<Marketers />} />
+          <Route path="/reviewers" element={<Reviewers />} />
           <Route path="/success" element={<SuccessLogin />} />
           <Route path="/review-more" element={<ReviewMore />} />
           <Route path="/submit-review" element={<SubmitReview />} />

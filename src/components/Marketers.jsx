@@ -1,63 +1,102 @@
+
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Marketers() {
-  const [phones, setPhones] = useState([]); // State to store the list of available phones
-  const [selectedPhone, setSelectedPhone] = useState(''); // State to store selected phone (ID)
+  const [phones, setPhones] = useState([]);
+  const [selectedPhone, setSelectedPhone] = useState('');
   const [company, setCompany] = useState('');
   const [link, setLink] = useState('');
 
-  // Fetch the available phones from the API
+  const navigate = useNavigate();
+
+  // Fetch available phones
   useEffect(() => {
-    console.log(localStorage.getItem('jwt_token'))
-    fetch('http://127.0.0.1:8080/api/mobiles/', {  // Ensure this URL is correct
+    fetch('http://127.0.0.1:8080/api/mobiles/', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${localStorage.getItem('jwt_token')}`  // Ensure the token is sent
+        'Authorization': `Token ${localStorage.getItem('jwt_token')}`
       }
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('403 Forbidden');
+        }
+        return response.json();
+      })
       .then((data) => {
-        console.log('mydata', data); // Check the structure of the response
         if (Array.isArray(data)) {
-          setPhones(data);  // Make sure the response is an array
+          setPhones(data);
         } else {
-          console.error("Received data is not an array", data);
+          toast.error("⚠️ Unexpected response structure.");
         }
       })
-      .catch((error) => console.error("Error fetching phones:", error));
+      .catch((error) => {
+        console.error("Error fetching phones:", error);
+        toast.error("❌ Failed to fetch phones.");
+      });
   }, []);
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = {
-      phone: selectedPhone, // The selected phone's ean (ID)
+      phone: selectedPhone,
       company,
       link,
     };
-    console.log('formData', formData)
-    // Now submit the form data to your API endpoint for Marketer
+
     fetch('http://127.0.0.1:8080/api/marketers/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${localStorage.getItem('jwt_token')}`, // Assuming you're using DRF token authentication
+        'Authorization': `Token ${localStorage.getItem('jwt_token')}`,
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response data (e.g., show success message or reset form)
-        console.log('Marketer submitted:', data);
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Submission failed');
+        }
+        return response.json();
       })
-      .catch((error) => console.error('Error submitting marketer:', error));
+      .then((data) => {
+        console.log('Marketer submitted:', data);
+        toast.success('✅ Marketer data submitted successfully!');
+        // Reset form
+        setCompany('');
+        setLink('');
+        setSelectedPhone('');
+      })
+      .catch((error) => {
+        console.error('Error submitting marketer:', error);
+        toast.error('❌ Failed to submit marketer data.');
+      });
+  };
+
+  const handleLogout = () => {
+    // localStorage.removeItem('jwt_token');
+    navigate('/');
   };
 
   return (
     <div>
-      <h1>Submit Marketer Info</h1>
+      <h1>Marketers</h1>
+
+      <ToastContainer position="top-center" />
+
+      <div style={{ marginBottom: '1rem' }}>
+        <button onClick={() => navigate('/marketers-list')} style={{ marginRight: '10px' }}>
+          📄 Marketers List
+        </button>
+        <button onClick={handleLogout}>
+          🚪 Logout
+        </button>
+      </div>
+
       <form onSubmit={handleSubmit}>
         <div>
           <label>Company:</label>
@@ -70,7 +109,7 @@ function Marketers() {
         </div>
 
         <div>
-          <label>Phone:</label>
+          <label>Select Phone:</label>
           <select
             value={selectedPhone}
             onChange={(e) => setSelectedPhone(e.target.value)}
@@ -95,7 +134,7 @@ function Marketers() {
           />
         </div>
 
-        <button type="submit">Submit Marketer</button>
+        <button type="submit">🚀 Submit Marketer</button>
       </form>
     </div>
   );

@@ -60,7 +60,7 @@ const AboutUs = () => {
           </div>
           <div className="col-md-4">
             <div className="card">
-              <img src="public/julie.jpeg" className="card-img-top" alt="Julie" style={{ width: "250px", height: "auto" }}/>
+              <img src="/julie.jpeg" className="card-img-top" alt="Julie" style={{ width: "250px", height: "auto" }}/>
               <div className="card-body">
                 <h5 className="card-title">Nkemdilim Julie Chime</h5>
                 <p className="card-text">Python Backend Developer</p>

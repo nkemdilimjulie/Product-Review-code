@@ -52,7 +52,7 @@ const Register = () => {
 
   const handleLogout = () => {
     logout();
-    localStorage.clear();
+    // localStorage.clear();
     navigate("/");
   };
 
