@@ -85,9 +85,7 @@ function Marketers() {
   return (
     <div>
       <h1>Marketers</h1>
-
       <ToastContainer position="top-center" />
-
       <div style={{ marginBottom: '1rem' }}>
         <button onClick={() => navigate('/marketers-list')} style={{ marginRight: '10px' }}>
           📄 Marketers List
@@ -96,7 +94,6 @@ function Marketers() {
           🚪 Logout
         </button>
       </div>
-
       <form onSubmit={handleSubmit}>
         <div>
           <label>Company:</label>
@@ -107,7 +104,6 @@ function Marketers() {
             required
           />
         </div>
-
         <div>
           <label>Select Phone:</label>
           <select
@@ -123,7 +119,6 @@ function Marketers() {
             ))}
           </select>
         </div>
-
         <div>
           <label>Link:</label>
           <input

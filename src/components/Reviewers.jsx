@@ -45,10 +45,8 @@ function Reviewers() {
         toast.error("❌ Failed to fetch phones.");
       });
   }, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const formData = {
       phone: selectedPhone,
       body,
@@ -57,10 +55,8 @@ function Reviewers() {
       rate: selectedRate,
       seller,
       price,
-      
     };
-
-    fetch('http://127.0.0.1:8080/api/reviewers/', {
+    fetch('http://127.0.0.1:8080/api/reviews/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -91,18 +87,14 @@ function Reviewers() {
         toast.error('❌ Failed to submit reviewer data.');
       });
   };
-
   const handleLogout = () => {
     // localStorage.removeItem('jwt_token');
     navigate('/');
   };
-
   return (
     <div>
       <h1>Reviewers</h1>
-
       <ToastContainer position="top-center" />
-
       <div style={{ marginBottom: '1rem' }}>
       <button onClick={() => navigate('/review-list')} style={{ marginRight: '10px' }}>
           📄 Phone Review List
@@ -114,7 +106,6 @@ function Reviewers() {
           🚪 Logout
         </button>
       </div>
-
       <form onSubmit={handleSubmit}>
         <div>
           <label>Select Phone:</label>
@@ -131,7 +122,6 @@ function Reviewers() {
             ))}
           </select>
         </div>
-
         <div>
           <label>Body:</label>
           <input
@@ -141,7 +131,6 @@ function Reviewers() {
             required
           />
         </div>
-
         <div>
           <label>Created_at:</label>
           <input
@@ -151,8 +140,6 @@ function Reviewers() {
             required
           />
         </div>
-
-
         <div>
           <label>Updated_at:</label>
           <input
@@ -162,8 +149,6 @@ function Reviewers() {
             required
           />
         </div>
-
-
         <div>
           <label>Rate:</label>
           <input
@@ -173,8 +158,6 @@ function Reviewers() {
             required
           />
         </div>
-
-
         <div>
           <label>Seller:</label>
           <input
@@ -184,7 +167,6 @@ function Reviewers() {
             required
           />
         </div>
-
         <div>
           <label>Price:</label>
           <input
@@ -194,8 +176,6 @@ function Reviewers() {
             required
           />
         </div>    
-
-        
         <button type="submit">🚀 Submit Reviewer</button>
       </form>
     </div>

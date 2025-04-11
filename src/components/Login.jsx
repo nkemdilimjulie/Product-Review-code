@@ -51,7 +51,7 @@ const Login = () => {
       if (user_type === "marketer") {
         navigate("/marketers");
       } else {
-        navigate("/reviewers");
+        navigate("/review-mobiles");
       }
     } catch (error) {
       console.error("Login or user fetch failed", error);

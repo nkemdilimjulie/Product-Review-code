@@ -44,6 +44,11 @@ import ReviewList from "./components/ReviewList";
 // import DeleteTodo from "./components/DeleteTodo";
 import MarketersDetailView from "./components/MarketersDetailView"; 
 
+// New Review Section
+import ReviewMobiles from "./components/ReviewMobiles";
+
+
+
 const App = () => {
   return (
     <AuthProvider>
@@ -69,6 +74,10 @@ const App = () => {
           <Route path="/marketer/:id/" element={<MarketersDetailView />} /> {/* ✅ Fixed path */}
           <Route path="/review-mobile" element={<ReviewMobile />} />
           <Route path="/review-list" element={<ReviewList />} />
+          
+          {/* New Review Section */}
+          <Route path="/review-mobiles" element={<ReviewMobiles />} />
+
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
             {/* <Route path="/create-todo" element={<CreateTodo />} />
