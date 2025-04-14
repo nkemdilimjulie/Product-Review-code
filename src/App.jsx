@@ -47,6 +47,7 @@ import MarketersDetailView from "./components/MarketersDetailView";
 // New Review Section
 import ReviewMobiles from "./components/ReviewMobiles";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import EditReview from "./components/EditReview";
 
 
 const App = () => {
@@ -78,6 +79,7 @@ const App = () => {
           {/* New Review Section */}
           <Route path="/review-mobiles" element={<ReviewMobiles />} />
           <Route path="/scroll-top" element={<ScrollToTopButton />} />
+          <Route path="/edit-review" element={<EditReview />} />
           
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>

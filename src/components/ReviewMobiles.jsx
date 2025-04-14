@@ -1,9 +1,35 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ConfirmModal from './ConfirmModal';
+
+
+const styleSheet = document.styleSheets[0];
+const fadeIn = `
+  @keyframes fadeIn {
+    from { opacity: 0 }
+    to { opacity: 1 }
+  }
+`;
+
+const scaleIn = `
+  @keyframes scaleIn {
+    from { transform: scale(0.9); opacity: 0 }
+    to { transform: scale(1); opacity: 1 }
+  }
+`;
+
+styleSheet.insertRule(fadeIn, styleSheet.cssRules.length);
+styleSheet.insertRule(scaleIn, styleSheet.cssRules.length);
+
 
 function ReviewMobiles() {
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({});
+
+  const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
   const [phones, setPhones] = useState([]);
   const [phone, setPhone] = useState('');
@@ -28,8 +54,12 @@ function ReviewMobiles() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = { phone, body, rate, seller, price, author };
-
+  const data = { phone, body, rate, seller, price, author };
+    setFormData(data);
+    setShowModal(true);
+  };
+  
+  const handleConfirmSubmit = () => {
     fetch('http://127.0.0.1:8080/api/reviews/', {
       method: 'POST',
       headers: {
@@ -38,23 +68,91 @@ function ReviewMobiles() {
       },
       body: JSON.stringify(formData)
     })
-      .then(res => {
-        if (!res.ok) throw new Error('Submission failed');
-        return res.json();
-      })
-      .then(() => {
-        toast.success('Review Successfully Submitted');
+    .then(async res => {
+      const responseData = await res.json();
+      if (!res.ok) {
+        toast.error('Submission Failed');
+        alert(JSON.stringify(responseData));
+        return;
+      }
+      toast.success('Review is Successfully Submitted');
+      setPhone(''); setBody(''); setRate(1); setSeller(''); setPrice('');
+    })
+    .catch(err => console.error(err))
+    .finally(() => setShowModal(false));
+  };
+  
+
+  // const confirmSubmission = () => {
+  //   const formData = { phone, body, rate, seller, price };
+  
+  //   fetch('http://127.0.0.1:8080/api/reviews/', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `Token ${localStorage.getItem('jwt_token')}`
+  //     },
+  //     body: JSON.stringify(formData)
+  //   })
+  //     .then(async (res) => {
+  //       const responseData = await res.json();
+  
+  //       if (!res.ok) {
+  //         const errorMsg = JSON.stringify(responseData);
+  //         console.error('Error:', errorMsg);
+  //         toast.error('Submission Failed');
+  //         alert(`Submission failed: ${errorMsg}`);
+  //         throw new Error('Submission failed');
+  //       }
+  
+  //       toast.success('Review is Successfully Submitted');
+  //       setPhone('');
+  //       setBody('');
+  //       setRate(1);
+  //       setSeller('');
+  //       setPrice('');
+  //       setShowConfirm(false);
+  //     })
+  //     .catch((err) => {
+  //       console.error('Error submitting review:', err);
+  //     });
+  // };
+  
+  const confirmSubmission = () => {
+    const formData = { phone, body, rate, seller, price, author };
+  
+    fetch('http://127.0.0.1:8080/api/reviews/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${localStorage.getItem('jwt_token')}`
+      },
+      body: JSON.stringify(formData)
+    })
+      .then(async (res) => {
+        const responseData = await res.json();
+  
+        if (!res.ok) {
+          toast.error('Submission Failed');
+          console.error('Error:', responseData);
+          setShowConfirm(false);
+          return;
+        }
+  
+        toast.success('Review is Successfully Submitted');
         setPhone('');
         setBody('');
         setRate(1);
         setSeller('');
         setPrice('');
+        setShowConfirm(false);
       })
       .catch(err => {
+        toast.error('Error submitting review');
         console.error(err);
-        toast.error('Submission Failed');
       });
   };
+  
 
   const buttonStyle = {
     margin: '8px',
@@ -66,61 +164,183 @@ function ReviewMobiles() {
     cursor: 'pointer',
   };
 
+  const cardStyle = {
+    maxWidth: '600px',
+    margin: '0 auto',
+    padding: '30px',
+    border: '1px solid #ddd',
+    borderRadius: '15px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+    backgroundColor: '#fff'
+  };
+
+  const labelStyle = {
+    display: 'block',
+    margin: '10px 0 5px',
+    fontWeight: 'bold'
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '8px',
+    marginBottom: '15px',
+    borderRadius: '8px',
+    border: '1px solid #ccc'
+  };
+
+  // const modalOverlayStyle = {
+  //   position: 'fixed',
+  //   top: 0, left: 0, right: 0, bottom: 0,
+  //   backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  //   display: 'flex',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   zIndex: 1000
+  // };
+  
+  // const modalContentStyle = {
+  //   backgroundColor: '#fff',
+  //   padding: '30px',
+  //   borderRadius: '15px',
+  //   maxWidth: '500px',
+  //   width: '90%',
+  //   boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+  //   textAlign: 'left'
+  // };
+  
+  const modalOverlayStyle = {
+    position: 'fixed',
+    top: 0, left: 0, right: 0, bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backdropFilter: 'blur(4px)',
+    WebkitBackdropFilter: 'blur(4px)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
+    animation: 'fadeIn 0.3s ease-in-out'
+  };
+  
+  const modalContentStyle = {
+    backgroundColor: '#fff',
+    padding: '30px',
+    borderRadius: '15px',
+    maxWidth: '500px',
+    width: '90%',
+    boxShadow: '0 8px 20px rgba(0,0,0,0.2)',
+    textAlign: 'left',
+    animation: 'scaleIn 0.3s ease-in-out'
+  };
+  
+
   return (
     <div style={{ padding: '30px' }}>
-      <h2>Review Mobiles</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Select Phone:</label>
-          <select value={phone} onChange={(e) => setPhone(e.target.value)} required>
-            <option value="">-- Select Phone --</option>
-            {phones.map((p) => (
-              <option key={p.ean} value={p.ean}>{p.brand} {p.model}</option>
-            ))}
-          </select>
-        </div>
+      <h2 style={{ textAlign: 'center' }}>Review Mobiles</h2>
+      <p style={{ textAlign: 'center' }}>A user is allowed to review a specific mobile phone ONCE</p>
+      
+      <div style={cardStyle}>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label style={labelStyle}>Select Phone:</label>
+            <select value={phone} onChange={(e) => setPhone(e.target.value)} required style={inputStyle}>
+              <option value="">-- Select Phone --</option>
+              {phones.map((p) => (
+                <option key={p.ean} value={p.ean}>{p.brand} {p.model}</option>
+              ))}
+            </select>
+          </div>
 
-        <div>
-          <label>Review:</label><br />
-          <textarea value={body} onChange={(e) => setBody(e.target.value)} rows="4" cols="50" />
-        </div>
+          <div>
+            <label style={labelStyle}>Review:</label>
+            <textarea value={body} onChange={(e) => setBody(e.target.value)} rows="4" style={inputStyle} />
+          </div>
 
-        <div>
-          <label>Rate (1–5):</label>
-          <select value={rate} onChange={(e) => setRate(Number(e.target.value))}>
-            {[1, 2, 3, 4, 5].map(num => (
-              <option key={num} value={num}>{num}</option>
-            ))}
-          </select>
-        </div>
+          <div>
+            <label style={labelStyle}>Rate (1–5):</label>
+            <select value={rate} onChange={(e) => setRate(Number(e.target.value))} style={inputStyle}>
+              {[1, 2, 3, 4, 5].map(num => (
+                <option key={num} value={num}>{num}</option>
+              ))}
+            </select>
+          </div>
 
-        <div>
-          <label>Seller:</label>
-          <input type="text" value={seller} onChange={(e) => setSeller(e.target.value)} />
-        </div>
+          <div>
+            <label style={labelStyle}>Seller:</label>
+            <input type="text" value={seller} onChange={(e) => setSeller(e.target.value)} style={inputStyle} />
+          </div>
 
-        <div>
-          <label>Price:</label>
-          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
-        </div>
+          <div>
+            <label style={labelStyle}>Price:</label>
+            <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} style={inputStyle} />
+          </div>
 
-        <div>
-          <label>Author:</label>
-          <input type="text" value={author} disabled />
-        </div>
+          <div>
+            <label style={labelStyle}>Author:</label>
+            <input type="text" value={author} disabled style={inputStyle} />
+          </div>
 
-        <button type="submit" style={{ ...buttonStyle, backgroundColor: 'green' }}>
-          Submit Review
-        </button>
-      </form>
+          <button type="submit" style={{ ...buttonStyle, backgroundColor: 'green' }}>
+            Submit Review
+          </button>
+        </form>
+
+        <ConfirmModal
+          show={showModal}
+          onCancel={() => setShowModal(false)}
+          onConfirm={handleConfirmSubmit}
+          data={formData}
+        />
+
+
+        {showConfirm && (
+          <div style={{ marginTop: '30px', textAlign: 'center', background: '#f9f9f9', padding: '20px', borderRadius: '10px' }}>
+            <h3>Confirm Your Review</h3>
+            <p><strong>Phone:</strong> {phones.find(p => p.ean === phone)?.brand} {phones.find(p => p.ean === phone)?.model}</p>
+            <p><strong>Review:</strong> {body}</p>
+            <p><strong>Rate:</strong> {rate}</p>
+            <p><strong>Seller:</strong> {seller}</p>
+            <p><strong>Price:</strong> ${price}</p>
+            <p><strong>Author:</strong> {author}</p>
+
+            <button onClick={confirmSubmission} style={{ ...buttonStyle, backgroundColor: 'green' }}>Confirm & Submit</button>
+            <button onClick={() => setShowConfirm(false)} style={{ ...buttonStyle, backgroundColor: 'gray' }}>Edit</button>
+          </div>
+        )}
+
+
+      </div>
 
       {/* Navigation Buttons */}
-      <div style={{ marginTop: '20px' }}>
+      <div style={{ marginTop: '30px', textAlign: 'center' }}>
+        <button onClick={() => navigate('/edit-review')} style={buttonStyle}>Edit Review</button>
         <button onClick={() => navigate('/review-list')} style={buttonStyle}>Review List</button>
         <button onClick={() => navigate('/marketers-list')} style={buttonStyle}>Market List</button>
-        <button onClick={() => navigate('/review-mobiles')} style={buttonStyle}>Review More</button>
         <button onClick={() => navigate('/')} style={{ ...buttonStyle, backgroundColor: 'crimson' }}>Logout</button>
       </div>
+
+      {showConfirm && (
+        <div style={modalOverlayStyle}>
+          <div style={modalContentStyle}>
+            <h3>Confirm Your Review</h3>
+            <p><strong>Phone:</strong> {phones.find(p => p.ean === phone)?.brand} {phones.find(p => p.ean === phone)?.model}</p>
+            <p><strong>Review:</strong> {body}</p>
+            <p><strong>Rate:</strong> {rate}</p>
+            <p><strong>Seller:</strong> {seller}</p>
+            <p><strong>Price:</strong> ${price}</p>
+            <p><strong>Author:</strong> {author}</p>
+
+            <div style={{ marginTop: '20px', textAlign: 'right' }}>
+              <button onClick={confirmSubmission} style={{ ...buttonStyle, backgroundColor: 'green', marginRight: '10px' }}>
+                Confirm & Submit
+              </button>
+              <button onClick={() => setShowConfirm(false)} style={{ ...buttonStyle, backgroundColor: 'gray' }}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
 
       <ToastContainer />
     </div>

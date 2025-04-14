@@ -1,6 +1,4 @@
-(Please, see the Project Flow towards the bottom of this page)
-
-# Setup 
+# Setup
 
 1. ensure you have at least version `v22.11.0`
 > node --version
@@ -64,17 +62,41 @@ Now that `n` is installed, you can use it to install any specific version of Nod
     ```
     and select the version you want
 
-4. **Navigate to the project directory**:
-    cd Project-Review-code
+## Clone Frontend
 
 
-5. ** Install Dependencies**
+### **Step 1: Clone the Frontend Repository**
+
+To start, you'll need to clone the frontend repository from GitHub to your local machine. The frontend repository URL is:
+
+**Repository URL**: [https://github.com/pietow/todo_client_p24_e04](https://github.com/pietow/todo_client_p24_e04)
+
+#### 1.1. **Open your terminal**:
+   Open a terminal (or command prompt) on your computer.
+
+#### 1.2. **Clone the repository**:
+   Run the following `git clone` command to clone the repository to your local machine:
+   ```bash
+   git clone https://github.com/pietow/todo_client_p24_e04.git
+   ```
+
+
+#### 1.3. **Navigate to the cloned directory**:
+   After cloning the repository, navigate to the project directory:
+   ```bash
+   cd todo_client_p24_e04
+   ```
+
+---
+
+### **Step 2: Install Dependencies**
+
 Before running the frontend application, you need to install the necessary dependencies defined in the `package.json` file.
 (It is like the `requirements.txt` for Python)
 
  This can be done using `npm`.
 
-6. **Install Node.js dependencies**:
+#### 2.1. **Install Node.js dependencies**:
    Run the following command to install the required dependencies:
    ```bash
    npm install
@@ -85,41 +107,17 @@ Before running the frontend application, you need to install the necessary depen
 
 ---
 
- 7. **Run the Development Server**
+### **Step 3: Run the Development Server**
 
  you can start the development server (for the frontend) to view the frontend in your browser.
 
+#### 3.1. **Run the development server**:
    Execute the following command to start the development server:
    ```bash
    npm run dev
    ```
 
    - **What this does**: This runs the `dev` script defined in the `package.json` file
-
-
-## Product-Review Flowchart
-
-![alt text](public/review_flowchart.png)
-
-## Get Help
-
-**🔐 Note: Only registered and logged-in users can post reviews or view exclusive marketer details.**
-### Here’s how to review products and explore marketers offering better deals:
-
-
-1. **Register** with us once by clicking on the **`Register`** link in the navigation bar.
-
-2. **Login** anytime you want to review a product or find better offers from marketers.
-
-3. After logging in, head over to **`Review a Mobile`** to write your review. You’ll select the phone, enter your feedback, seller info, and rating.
-
-4. You can view all submitted reviews under the **`Review List`** page.
-
-5. Want better offers? Go to the **`Marketers List`** or **`Marketer Details`** page to explore sellers offering the same products at better prices!
-
-6. However, if you are a marketer, register with us as a marketer by clicking the **`tiny square shape`** which says, **`Use this option only to create a marketer account for advertisement purposes.`**
-
-7. So, if you register as a marketer **`(see no. 6 above)`**, you shall be directed to **`Marketers`** page. Here you shall be able to enter your company's name and link. But remember to select the phone you want to advertise.
 
 
 
