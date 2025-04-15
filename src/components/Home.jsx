@@ -1,23 +1,23 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles.css";  // Import your custom CSS for animations
-
+import "../styles.css";
 
 const Home = () => {
   return (
     <div className="container">
       {/* Navigation Bar */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light mb-2">
         <div className="container-fluid">
-          {/* <Link className="navbar-brand" to="/">MyProject</Link> */}
           <img src="/mobile7.jpeg" className="login-img-top" alt="login" style={{ width: "70px", height: "auto" }} />
           <img src="/mobile2.webp" className="login-img-top" alt="login" style={{ width: "60px", height: "auto" }} />
           <img src="/mobile3.jpeg" className="login-img-top" alt="login" style={{ width: "150px", height: "auto" }} />
           <img src="/mobile4.jpeg" className="login-img-top" alt="login" style={{ width: "50px", height: "auto" }} />
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
+
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
@@ -31,10 +31,16 @@ const Home = () => {
         </div>
       </nav>
 
+      {/* 🔥 New Social Platform Navbar */}
+      <nav className="navbar navbar-dark bg-dark rounded px-3 mb-4">
+        <span className="navbar-brand mb-0 h5 text-white">🌐 Social Platform</span>
+        <Link to="/social-platform" className="btn btn-outline-light btn-sm">Visit Community</Link>
+      </nav>
+
       {/* Hero Section */}
       <div className="hero-section text-center">
         <h1>Welcome to our Product Review Community</h1>
-        <p>A TarasJulie Product Selection Scheme</p>
+        <p className="text-muted">A TarasJulie Product Selection Scheme</p>
       </div>
 
       {/* Feature Cards Section */}
@@ -68,6 +74,15 @@ const Home = () => {
               <Link to="/help" className="btn btn-primary">Help Me</Link>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* 🌟 Social Platform Feature Card */}
+      <div className="card mt-5 border-success shadow">
+        <div className="card-body text-center">
+          <h4 className="card-title text-success">Join the Conversation</h4>
+          <p className="card-text">No login needed — just share your thoughts, comment on posts, and connect freely!</p>
+          <Link to="/social-platform" className="btn btn-success">Enter Social Platform</Link>
         </div>
       </div>
     </div>

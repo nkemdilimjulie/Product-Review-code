@@ -237,7 +237,8 @@ function ReviewMobiles() {
     <div style={{ padding: '30px' }}>
       <h2 style={{ textAlign: 'center' }}>Review Mobiles</h2>
       <p style={{ textAlign: 'center' }}>A user is allowed to review a specific mobile phone ONCE</p>
-      
+      <p style={{ textAlign: 'center' }}>Moreover, check your review again before submission. You have no permission for updates</p>
+
       <div style={cardStyle}>
         <form onSubmit={handleSubmit}>
           <div>
@@ -312,7 +313,7 @@ function ReviewMobiles() {
 
       {/* Navigation Buttons */}
       <div style={{ marginTop: '30px', textAlign: 'center' }}>
-        <button onClick={() => navigate('/edit-review')} style={buttonStyle}>Edit Review</button>
+        <button onClick={() => navigate('/edit-myreviews')} style={buttonStyle}>Edit My Reviews</button>
         <button onClick={() => navigate('/review-list')} style={buttonStyle}>Review List</button>
         <button onClick={() => navigate('/marketers-list')} style={buttonStyle}>Market List</button>
         <button onClick={() => navigate('/')} style={{ ...buttonStyle, backgroundColor: 'crimson' }}>Logout</button>
