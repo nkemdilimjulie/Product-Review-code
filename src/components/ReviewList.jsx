@@ -1,147 +1,41 @@
-// import React, { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-
-// const ReviewList = () => {
-//   const [reviews, setReviews] = useState([]);
-//   const navigate = useNavigate();
-
-//   // Load reviews from localStorage when the component is mounted
-//   useEffect(() => {
-//     const savedReviews = JSON.parse(localStorage.getItem("review-mobile")) || [];
-//     setReviews(savedReviews);
-//   }, []);
-
-//   // Navigate to ReviewMobile to submit more reviews
-//   const handleReviewMore = () => {
-//     navigate("/review-mobile");
-//   };
-
-//   // Clear the session and navigate to the login page
-//   const handleLogout = () => {
-//     localStorage.removeItem("accessToken");
-//     localStorage.removeItem("username");
-//     navigate("/login");
-//   };
-
-//   return (
-//     <div className="container mt-4">
-//       <h2>📜 Your Reviews</h2>
-
-//       {/* Displaying reviews */}
-//       {reviews.length === 0 ? (
-//         <p>No reviews submitted yet. Please submit a review!</p>
-//       ) : (
-//         <ul className="list-group">
-//           {reviews.map((review, index) => (
-//             <li key={index} className="list-group-item">
-//               <h5>{review.phone}</h5>
-//               <p><strong>Body:</strong> {review.body}</p>
-//               <p><strong>Seller:</strong> {review.seller}</p>
-//               <p><strong>Price:</strong> ${review.price}</p>
-//               <p><strong>Rate:</strong> {review.rate}</p>
-//               <p><strong>Author:</strong> {review.author}</p>
-//               <p><strong>Created At:</strong> {new Date(review.created_at).toLocaleString()}</p>
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-
-//       {/* Buttons for Review More and Logout */}
-//       <div className="mt-4 d-flex flex-column gap-3">
-//         <button className="btn btn-primary" onClick={handleReviewMore}>
-//           ➕ Review More Phones
-//         </button>
-//         <button className="btn btn-danger" onClick={handleLogout}>
-//           🚪 Logout
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ReviewList;
-
-
-// import React, { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-
-// const phoneLookup = {
-//   1: "Samsung - Galaxy S21",
-//   2: "Apple - iPhone 13",
-//   // Add more mappings as needed
-// };
-
-// const ReviewList = () => {
-//   const [reviews, setReviews] = useState([]);
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     const savedReviews = JSON.parse(localStorage.getItem("review-mobile")) || [];
-//     setReviews(savedReviews);
-//   }, []);
-
-//   const handleReviewMore = () => {
-//     navigate("/review-more");
-//   };
-
-//   const handleLogout = () => {
-//     // localStorage.removeItem("accessToken");
-//     // localStorage.removeItem("username");
-//     navigate("/");
-//   };
-
-//   return (
-//     <div className="container mt-4">
-//       <h2>📱 Mobile Reviews</h2>
-//       {reviews.length === 0 ? (
-//         <p>No reviews yet. Be the first to review!</p>
-//       ) : (
-//         <ul className="list-group">
-//           {reviews.map((review, index) => (
-//             <li key={index} className="list-group-item mb-3">
-//               <h5>
-//                 <strong>#{index + 1}</strong> – {phoneLookup[review.phone] || "Unknown Phone"}
-//               </h5>
-//               <p>{review.body}</p>
-//               <p><strong>Author:</strong> {review.author}</p>
-//               <p><strong>Seller:</strong> {review.seller}</p>
-//               <p><strong>Price:</strong> ${review.price}</p>
-//               <p><strong>Rating:</strong> {review.rate} / 5</p>
-//               <p><strong>Reviewed On:</strong> {new Date(review.created_at).toLocaleString()}</p>
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-
-//       {/* Action Buttons */}
-//       <div className="mt-4 d-flex gap-3">
-//         <button className="btn btn-success" onClick={handleReviewMore}>
-//           ➕ Review More
-//         </button>
-//         <button className="btn btn-danger" onClick={handleLogout}>
-//           🚪 Logout
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ReviewList;
-
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTopButton from './ScrollToTopButton';
 import { FaArrowUp } from 'react-icons/fa';
+import { saveAs } from 'file-saver';
 
 function ReviewList() {
   const [reviews, setReviews] = useState([]);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [totalPages, setTotalPages] = useState(1);
+  const [expandedCard, setExpandedCard] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+
+  const goBack = () => {
+    navigate(-1);  // Go back to last page
+  };
+  
+  const goForward = () => {
+    navigate(1);   // Go forward to next page
+  };
+
+  const ITEMS_PER_PAGE = 7;
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8080/api/reviews/', {
+    const query = new URLSearchParams(location.search);
+    const pageQuery = parseInt(query.get('page')) || 1;
+    setPage(pageQuery);
+  }, [location.search]);
+
+  useEffect(() => {
+    fetch(`http://127.0.0.1:8080/api/reviews/?ordering=-created_at&page=${page}`, {
+
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -150,14 +44,36 @@ function ReviewList() {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log('Fetched data:', data);
         if (Array.isArray(data)) {
-          setReviews(data);
+          const filtered = data.filter(r =>
+            searchTerm === '' || r.author.toLowerCase().includes(searchTerm.toLowerCase()));
+          setTotalPages(Math.ceil(filtered.length / ITEMS_PER_PAGE));
+          setReviews(filtered);
         } else {
           console.error("Expected an array of reviews, got:", data);
         }
       })
       .catch((err) => console.error('Error fetching reviews:', err));
-  }, []);
+  }, [searchTerm]);
+
+  const handleExport = (type) => {
+    const headers = ['Author', 'Phone', 'Body', 'Seller', 'Price', 'Rate', 'Created', 'Updated'];
+    const rows = reviews.map(r => [
+      r.author,
+      r.phone,
+      r.body || 'N/A',
+      r.seller,
+      r.price || 'N/A',
+      r.rate,
+      // new Date(r.created_at).toLocaleString(),
+      // new Date(r.updated_at).toLocaleString()
+    ]);
+    const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+
+    const blob = new Blob([csvContent], { type: type === 'pdf' ? 'application/pdf' : 'text/csv' });
+    saveAs(blob, `reviews.${type}`);
+  };
 
   const buttonStyle = {
     margin: '8px',
@@ -169,41 +85,85 @@ function ReviewList() {
     cursor: 'pointer',
   };
 
+  const currentReviews = reviews.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+
   return (
     <div style={{ padding: '2rem' }}>
-      <h2>All Reviews</h2>
-      {reviews.length === 0 ? (
+      
+      <h2>Review List</h2>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        
+        <div>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by author..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+      </div>
+      {currentReviews.length === 0 ? (
         <p>No reviews found.</p>
       ) : (
-        <ul>
-          {reviews.map((review) => (
-            <li key={review.id} style={{ marginBottom: '1.5rem', border: '1px solid #ccc', padding: '1rem', borderRadius: '8px' }}>
+        <ul className="list-group">
+          {currentReviews.map((review) => (
+            <li
+              key={review.id}
+              className="list-group-item mb-3"
+              style={{ borderRadius: '10px', cursor: 'pointer' }}
+              onClick={() => setExpandedCard(expandedCard === review.id ? null : review.id)}
+            >
               <p><strong>Author:</strong> {review.author}</p>
               <p><strong>Phone:</strong> {review.phone}</p>
-              <p><strong>Body:</strong> {review.body || 'N/A'}</p>
-              <p><strong>Seller:</strong> {review.seller}</p>
-              <p><strong>Price:</strong> {review.price ? `$${review.price}` : 'N/A'}</p>
-              <p><strong>Rating:</strong> {review.rate}/5</p>
-              <p><strong>Created:</strong> {new Date(review.created_at).toLocaleString()}</p>
-              <p><strong>Updated:</strong> {new Date(review.updated_at).toLocaleString()}</p>
+              {expandedCard === review.id && (
+                <div>
+                  <p><strong>Body:</strong> {review.body || 'N/A'}</p>
+                  <p><strong>Seller:</strong> {review.seller}</p>
+                  <p><strong>Price:</strong> {review.price ? `$${review.price}` : 'N/A'}</p>
+                  <p><strong>Rating:</strong> {review.rate}/5</p>
+                  {/* <p><strong>Created:</strong> {new Date(review.created_at).toLocaleString()}</p>
+                  <p><strong>Updated:</strong> {new Date(review.updated_at).toLocaleString()}</p> */}
+                </div>
+              )}
             </li>
           ))}
         </ul>
-      
       )}
-      <div style={{ marginTop: '20px' }}>
-        <button onClick={() => navigate('/review-mobiles')} style={buttonStyle}>Review Mobiles</button>
-        <button onClick={() => navigate('/')} style={{ ...buttonStyle, backgroundColor: 'crimson' }}>Logout</button>
+
+      <div className="d-flex justify-content-between mt-4">
+        <button
+          disabled={page === 1}
+          onClick={() => navigate(`?page=${page - 1}`)}
+          className="btn btn-outline-primary"
+        >Previous</button>
+
+        <span className="align-self-center">Page {page} of {totalPages}</span>
+
+        <button
+          disabled={page === totalPages}
+          onClick={() => navigate(`?page=${page + 1}`)}
+          className="btn btn-outline-primary"
+        >Next</button>
       </div>
+
+      <div className="mt-4">
+        <button className="btn btn-danger me-2" onClick={() => handleExport('csv')}>Export to CSV</button>
+        <button onClick={() => navigate('/review-list-vertical')} style={buttonStyle}>Review List Vertical</button>
+        <button className="btn btn-danger" onClick={() => handleExport('pdf')}>Export to PDF</button>
+      </div>
+      <div>
+          <button className="btn btn-secondary me-2" onClick={goBack}>⬅️ Back</button>
+          <button onClick={() => navigate('/review-mobiles')} style={buttonStyle}>Review Mobiles</button>
+          <button onClick={() => navigate('/')} style={{ ...buttonStyle, backgroundColor: 'crimson' }}>Logout</button>
+          <button className="btn btn-secondary" onClick={goForward}>➡️ Forward</button>
+        </div> 
+     
       <ScrollToTopButton />
       <ToastContainer />
       <FaArrowUp />
-
     </div>
-    
   );
- 
-  
 }
 
 export default ReviewList;

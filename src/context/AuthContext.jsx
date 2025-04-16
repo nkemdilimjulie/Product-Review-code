@@ -48,3 +48,52 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+
+// import React, { createContext, useState, useContext, useEffect } from "react";
+
+// const AuthContext = createContext();
+// export default AuthContext;
+
+// export const useAuth = () => {
+//   const context = useContext(AuthContext);
+//   if (!context) {
+//     throw new Error("useAuth must be used within an AuthProvider");
+//   }
+//   return context;
+// };
+
+// export const AuthProvider = ({ children }) => {
+//   const [isAuthenticated, setIsAuthenticated] = useState(false);
+//   const [user, setUser] = useState(null);
+
+//   // ✅ Load session from localStorage on app start
+//   useEffect(() => {
+//     const storedUser = localStorage.getItem("user");
+//     if (storedUser) {
+//       const parsedUser = JSON.parse(storedUser);
+//       setUser(parsedUser);
+//       setIsAuthenticated(true);
+//     }
+//   }, []);
+
+//   // ✅ Login method: sets context + localStorage
+//   const login = (userData) => {
+//     localStorage.setItem("user", JSON.stringify(userData));
+//     setUser(userData);
+//     setIsAuthenticated(true);
+//   };
+
+//   // ✅ Logout method: clears context + localStorage
+//   const logout = () => {
+//     localStorage.removeItem("user");
+//     setUser(null);
+//     setIsAuthenticated(false);
+//   };
+
+//   return (
+//     <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };

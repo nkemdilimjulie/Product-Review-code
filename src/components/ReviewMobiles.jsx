@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmModal from './ConfirmModal';
+import ScrollToTopButton from './ScrollToTopButton';
 
 
 const styleSheet = document.styleSheets[0];
@@ -38,6 +39,15 @@ function ReviewMobiles() {
   const [seller, setSeller] = useState('');
   const [price, setPrice] = useState('');
   const [author, setAuthor] = useState(localStorage.getItem('username') || '');
+
+
+  const goBack = () => {
+    navigate(-1);  // Go back to last page
+  };
+  
+  const goForward = () => {
+    navigate(1);   // Go forward to next page
+  };
 
   useEffect(() => {
     fetch('http://127.0.0.1:8080/api/mobiles/', {
@@ -313,10 +323,12 @@ function ReviewMobiles() {
 
       {/* Navigation Buttons */}
       <div style={{ marginTop: '30px', textAlign: 'center' }}>
+        <button className="btn btn-secondary me-2" onClick={goBack}>⬅️ Back</button>
         <button onClick={() => navigate('/edit-myreviews')} style={buttonStyle}>Edit My Reviews</button>
         <button onClick={() => navigate('/review-list')} style={buttonStyle}>Review List</button>
         <button onClick={() => navigate('/marketers-list')} style={buttonStyle}>Market List</button>
         <button onClick={() => navigate('/')} style={{ ...buttonStyle, backgroundColor: 'crimson' }}>Logout</button>
+        <button className="btn btn-secondary" onClick={goForward}>➡️ Forward</button>
       </div>
 
       {showConfirm && (
@@ -342,7 +354,7 @@ function ReviewMobiles() {
         </div>
       )}
 
-
+      <ScrollToTopButton />
       <ToastContainer />
     </div>
   );

@@ -29,13 +29,13 @@ const Help = () => {
           You can view all submitted reviews under the <code>Review List</code> page.
         </li>
         <li className="list-group-item">
+          Or, are you a marketer? If yes, then, register with us as a marketer by clicking the <code>tiny square shape</code> which says, <code>Use this option only to create a marketer account for advertisement purposes.</code>
+        </li>
+        <li className="list-group-item">
+          So, if you register as a marketer <code>(see no. 5 above)</code>, you shall be directed to <code>Marketers</code> page. Here you shall be able to enter your company's name and link. <br />But remember to select the phone you want to advertise from the list already provided.
+        </li>
+        <li className="list-group-item">
           Want better offers? Go to the <code>Marketers List</code> or <code>Marketer Details</code> page to explore sellers offering the same products at better prices!
-        </li>
-        <li className="list-group-item">
-          However, if you are a marketer, register with us as a marketer by clicking the <code>tiny square shape</code> which says, <code>Use this option only to create a marketer account for advertisement purposes.</code>
-        </li>
-        <li className="list-group-item">
-          So, if you register as a marketer <code>(see no. 6 above)</code>, you shall be directed to <code>Marketers</code> page. Here you shall be able to enter your company's name and link. But remember to select the phone you want to advertise.
         </li>
       </ol>
 

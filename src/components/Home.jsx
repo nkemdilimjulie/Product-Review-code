@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import "../styles.css";
 
 const Home = () => {
+  // localStorage.removeItem("user");
+  // logout(); // if using AuthContext
+  // // navigate("/login");
+
   return (
     <div className="container">
       {/* Navigation Bar */}
@@ -70,7 +74,7 @@ const Home = () => {
             <img src="/help.jpg" className="card-img-top" alt="help" style={{ width: "60px", height: "auto" }} />
             <div className="card-body">
               <h5 className="card-title">Get Help</h5>
-              <p className="card-text">Get some directions on how to review our products</p>
+              <p className="card-text">Get some directions on how to review our products or market your products</p>
               <Link to="/help" className="btn btn-primary">Help Me</Link>
             </div>
           </div>

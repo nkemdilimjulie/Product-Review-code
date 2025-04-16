@@ -495,7 +495,7 @@ const EditMyReviews = () => {
           Review Mobiles
         </button>
         <button
-          className="btn btn-secondary"
+          className="btn btn-danger"
           onClick={() => (window.location.href = "/")}
         >
           Logout

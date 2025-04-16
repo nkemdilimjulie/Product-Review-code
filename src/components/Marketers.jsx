@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmModal from './ConfirmModal'; 
+import ScrollToTopButton from './ScrollToTopButton';
 
 function Marketers() {
   const [showModal, setShowModal] = useState(false);
@@ -150,12 +151,15 @@ function Marketers() {
         </div>
 
         <div style={styles.buttonRow}>
+          <button className="btn btn-secondary me-2" onClick={goBack}>⬅️ Back</button>
           <button type="submit" style={styles.primaryButton}>Submit Market</button>
           <button type="button" onClick={() => navigate('/marketers-list')} style={styles.secondaryButton}>MarketersList</button>
           {/* <button type="button" onClick={() => navigate('/confirm-edit-marketer')} style={styles.secondaryButton}>ConfirmOrEditMarket</button> */}
           <button type="button" onClick={() => navigate('/')} style={styles.logoutButton}>Logout</button>
+          <button className="btn btn-secondary" onClick={goForward}>➡️ Forward</button>
         </div>
       </form>
+      <ScrollToTopButton />
       <ToastContainer />
       <ConfirmModal
         show={showModal}
