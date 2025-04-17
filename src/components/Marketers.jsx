@@ -1,16 +1,15 @@
 
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmModal from './ConfirmModal'; 
 import ScrollToTopButton from './ScrollToTopButton';
+import { API_DOMAIN } from '../configdomain';
 
 function Marketers() {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
-
   const [phones, setPhones] = useState([]);
   const [selectedPhone, setSelectedPhone] = useState('');
   const [company, setCompany] = useState('');
@@ -18,7 +17,7 @@ function Marketers() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8080/api/mobiles/', {
+    fetch(`${API_DOMAIN}/api/mobiles/`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Token ${localStorage.getItem('jwt_token')}`
@@ -35,49 +34,28 @@ function Marketers() {
       .catch(() => toast.error('Error fetching phones'));
   }, []);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   const formData = {
-  //     phone: selectedPhone,
-  //     company,
-  //     link
-  //   };
-
-  //   fetch('http://127.0.0.1:8080/api/marketers/', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Token ${localStorage.getItem('jwt_token')}`
-  //     },
-  //     body: JSON.stringify(formData)
-  //   })
-  //     .then(response => {
-  //       if (!response.ok) {
-  //         return response.json().then(data => {
-  //           throw new Error(data.detail || data.link || "Submission error");
-  //         });
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(() => {
-  //       toast.success('Market Successfully Submitted!');
-  //       setCompany('');
-  //       setLink('');
-  //       setSelectedPhone('');
-  //     })
-  //     .catch(error => toast.error(error.message));
-  // };
-
-    const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const data = { phone, company, link, author };
+    const username = localStorage.getItem('username');
+
+    if (!username) {
+      toast.error('User not logged in');
+      return;
+    }
+
+    const data = {
+      phone: selectedPhone,
+      company,
+      link,
+      author: username
+    };
+
     setFormData(data);
-    setShowModal(true);  // show the confirmation modal
+    setShowModal(true);
   };
-  
+
   const handleConfirmSubmit = () => {
-    fetch('http://127.0.0.1:8080/api/marketers/', {
+    fetch(`${API_DOMAIN}/api/marketers/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -89,23 +67,31 @@ function Marketers() {
       const data = await res.json();
   
       if (!res.ok) {
-        toast.error('Submission Failed');
-        alert(`Failed: ${JSON.stringify(data)}`);
-        throw new Error('Submission failed');
+        toast.error(data.detail || data.link || 'Submission failed');
+        setShowModal(false);
+        return;
       }
   
       toast.success('Marketer Successfully Submitted');
-      setPhone('');
+      setSelectedPhone('');
       setCompany('');
       setLink('');
       setShowModal(false);
     })
     .catch((err) => {
       console.error('Error submitting marketer:', err);
+      toast.error('Error submitting marketer');
       setShowModal(false);
     });
   };
-  
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  const goForward = () => {
+    navigate(1);
+  };
 
   return (
     <div style={styles.container}>
@@ -151,30 +137,30 @@ function Marketers() {
         </div>
 
         <div style={styles.buttonRow}>
-          <button className="btn btn-secondary me-2" onClick={goBack}>⬅️ Back</button>
+          <button className="btn btn-secondary me-2" type="button" onClick={goBack}>⬅️ Back</button>
           <button type="submit" style={styles.primaryButton}>Submit Market</button>
           <button type="button" onClick={() => navigate('/marketers-list')} style={styles.secondaryButton}>MarketersList</button>
-          {/* <button type="button" onClick={() => navigate('/confirm-edit-marketer')} style={styles.secondaryButton}>ConfirmOrEditMarket</button> */}
           <button type="button" onClick={() => navigate('/')} style={styles.logoutButton}>Logout</button>
-          <button className="btn btn-secondary" onClick={goForward}>➡️ Forward</button>
+          <button className="btn btn-secondary" type="button" onClick={goForward}>➡️ Forward</button>
         </div>
       </form>
+
       <ScrollToTopButton />
       <ToastContainer />
+
       <ConfirmModal
         show={showModal}
         onCancel={() => setShowModal(false)}
         onConfirm={handleConfirmSubmit}
         data={formData}
       />
-
     </div>
   );
 }
 
 const styles = {
   container: {
-    maxWidth: '600px',
+    maxWidth: '800px',
     margin: '30px auto',
     padding: '20px',
     borderRadius: '10px',
@@ -202,7 +188,9 @@ const styles = {
   },
   buttonRow: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    gap: '10px'
   },
   primaryButton: {
     padding: '10px 20px',
