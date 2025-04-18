@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { API_DOMAIN } from '../configdomain';
+import { API_DOMAIN } from '../../configdomain';
 
 
 const EditMyReviews = () => {

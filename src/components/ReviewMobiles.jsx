@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmModal from './ConfirmModal';
 import ScrollToTopButton from './ScrollToTopButton';
+import { API_DOMAIN } from '../../configdomain';
 
 
 const styleSheet = document.styleSheets[0];
@@ -50,17 +51,32 @@ function ReviewMobiles() {
   };
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8080/api/mobiles/', {
+    fetch(`${API_DOMAIN}/api/mobiles/`, {
       headers: {
         'Authorization': `Token ${localStorage.getItem('jwt_token')}`,
       },
     })
       .then(res => res.json())
       .then(data => {
+        console.log("Fetched phones:", data);
         setPhones(data);
       })
       .catch(err => console.error('Error fetching phones:', err));
   }, []);
+
+  // useEffect(() => {
+  //   fetch(`${API_DOMAIN}/mobiles/`)
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       console.log("Fetched phones:", data);
+  //       setPhones(data.results);  // ✅ Get the actual array of phones
+  //     })
+  //     .catch(error => {
+  //       console.error("Error fetching phones:", error);
+  //       setPhones([]);  // fallback to empty array
+  //     });
+  // }, []);
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,7 +86,7 @@ function ReviewMobiles() {
   };
   
   const handleConfirmSubmit = () => {
-    fetch('http://127.0.0.1:8080/api/reviews/', {
+    fetch(`${API_DOMAIN}/api/reviews/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -92,11 +108,11 @@ function ReviewMobiles() {
     .finally(() => setShowModal(false));
   };
   
-
-  // const confirmSubmission = () => {
-  //   const formData = { phone, body, rate, seller, price };
   
-  //   fetch('http://127.0.0.1:8080/api/reviews/', {
+  // const confirmSubmission = () => {
+  //   const formData = { phone, body, rate, seller, price, author };
+  
+  //   fetch(`${API_DOMAIN}/api/reviews/`, { 
   //     method: 'POST',
   //     headers: {
   //       'Content-Type': 'application/json',
@@ -108,11 +124,10 @@ function ReviewMobiles() {
   //       const responseData = await res.json();
   
   //       if (!res.ok) {
-  //         const errorMsg = JSON.stringify(responseData);
-  //         console.error('Error:', errorMsg);
   //         toast.error('Submission Failed');
-  //         alert(`Submission failed: ${errorMsg}`);
-  //         throw new Error('Submission failed');
+  //         console.error('Error:', responseData);
+  //         setShowConfirm(false);
+  //         return;
   //       }
   
   //       toast.success('Review is Successfully Submitted');
@@ -123,45 +138,11 @@ function ReviewMobiles() {
   //       setPrice('');
   //       setShowConfirm(false);
   //     })
-  //     .catch((err) => {
-  //       console.error('Error submitting review:', err);
+  //     .catch(err => {
+  //       toast.error('Error submitting review');
+  //       console.error(err);
   //     });
   // };
-  
-  const confirmSubmission = () => {
-    const formData = { phone, body, rate, seller, price, author };
-  
-    fetch('http://127.0.0.1:8080/api/reviews/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${localStorage.getItem('jwt_token')}`
-      },
-      body: JSON.stringify(formData)
-    })
-      .then(async (res) => {
-        const responseData = await res.json();
-  
-        if (!res.ok) {
-          toast.error('Submission Failed');
-          console.error('Error:', responseData);
-          setShowConfirm(false);
-          return;
-        }
-  
-        toast.success('Review is Successfully Submitted');
-        setPhone('');
-        setBody('');
-        setRate(1);
-        setSeller('');
-        setPrice('');
-        setShowConfirm(false);
-      })
-      .catch(err => {
-        toast.error('Error submitting review');
-        console.error(err);
-      });
-  };
   
 
   const buttonStyle = {
@@ -198,26 +179,7 @@ function ReviewMobiles() {
     border: '1px solid #ccc'
   };
 
-  // const modalOverlayStyle = {
-  //   position: 'fixed',
-  //   top: 0, left: 0, right: 0, bottom: 0,
-  //   backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  //   display: 'flex',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   zIndex: 1000
-  // };
-  
-  // const modalContentStyle = {
-  //   backgroundColor: '#fff',
-  //   padding: '30px',
-  //   borderRadius: '15px',
-  //   maxWidth: '500px',
-  //   width: '90%',
-  //   boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
-  //   textAlign: 'left'
-  // };
-  
+ 
   const modalOverlayStyle = {
     position: 'fixed',
     top: 0, left: 0, right: 0, bottom: 0,

@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTopButton from './ScrollToTopButton';
 import { FaArrowUp } from 'react-icons/fa';
+import { API_DOMAIN } from '../../configdomain';
 
 function ReviewList() {
   const [reviews, setReviews] = useState([]);
@@ -23,7 +24,7 @@ function ReviewList() {
   };
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8080/api/reviews/', {
+    fetch(`${API_DOMAIN}/api/reviews/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +61,7 @@ function ReviewList() {
     <div className="container py-4">
       {/* Top Nav Buttons */}
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2 className="mb-0">All Reviews</h2>
+        <h2 className="mb-0">Reviews List</h2>
         <div>
           <button className="btn btn-primary me-2" onClick={() => navigate('/review-mobiles')}>Review Mobiles</button>
           <button className="btn btn-danger" onClick={() => navigate('/')}>Logout</button>

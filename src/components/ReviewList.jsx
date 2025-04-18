@@ -6,6 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTopButton from './ScrollToTopButton';
 import { FaArrowUp } from 'react-icons/fa';
 import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
+import { API_DOMAIN } from '../../configdomain';
 
 function ReviewList() {
   const [reviews, setReviews] = useState([]);
@@ -34,7 +38,7 @@ function ReviewList() {
   }, [location.search]);
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8080/api/reviews/?ordering=-created_at&page=${page}`, {
+    fetch(`${API_DOMAIN}/api/reviews/?ordering=-created_at&page=${page}`, {
 
       method: 'GET',
       headers: {
@@ -56,7 +60,6 @@ function ReviewList() {
       })
       .catch((err) => console.error('Error fetching reviews:', err));
   }, [searchTerm]);
-
   const handleExport = (type) => {
     const headers = ['Author', 'Phone', 'Body', 'Seller', 'Price', 'Rate', 'Created', 'Updated'];
     const rows = reviews.map(r => [
@@ -66,15 +69,24 @@ function ReviewList() {
       r.seller,
       r.price || 'N/A',
       r.rate,
-      // new Date(r.created_at).toLocaleString(),
-      // new Date(r.updated_at).toLocaleString()
+      new Date(r.created_at).toLocaleString(),
+      new Date(r.updated_at).toLocaleString()
     ]);
-    const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-
-    const blob = new Blob([csvContent], { type: type === 'pdf' ? 'application/pdf' : 'text/csv' });
-    saveAs(blob, `reviews.${type}`);
+  
+    if (type === 'pdf') {
+      const doc = new jsPDF();
+      autoTable(doc, {
+        head: [headers],
+        body: rows,
+      });
+      doc.save('reviews.pdf');
+    } else {
+      const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      saveAs(blob, 'reviews.csv');
+    }
   };
-
+  
   const buttonStyle = {
     margin: '8px',
     padding: '10px 20px',
@@ -122,8 +134,8 @@ function ReviewList() {
                   <p><strong>Seller:</strong> {review.seller}</p>
                   <p><strong>Price:</strong> {review.price ? `$${review.price}` : 'N/A'}</p>
                   <p><strong>Rating:</strong> {review.rate}/5</p>
-                  {/* <p><strong>Created:</strong> {new Date(review.created_at).toLocaleString()}</p>
-                  <p><strong>Updated:</strong> {new Date(review.updated_at).toLocaleString()}</p> */}
+                  <p><strong>Created:</strong> {new Date(review.created_at).toLocaleString()}</p>
+                  <p><strong>Updated:</strong> {new Date(review.updated_at).toLocaleString()}</p>
                 </div>
               )}
             </li>

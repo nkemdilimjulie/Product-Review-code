@@ -51,6 +51,7 @@ const App = () => {
           
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
+          {/* <Route path="/marketers" element={<Marketers />} /> */}
           </Route>
         </Routes>
       </Router>
