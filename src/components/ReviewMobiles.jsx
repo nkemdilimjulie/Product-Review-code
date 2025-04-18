@@ -64,20 +64,6 @@ function ReviewMobiles() {
       .catch(err => console.error('Error fetching phones:', err));
   }, []);
 
-  // useEffect(() => {
-  //   fetch(`${API_DOMAIN}/mobiles/`)
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       console.log("Fetched phones:", data);
-  //       setPhones(data.results);  // ✅ Get the actual array of phones
-  //     })
-  //     .catch(error => {
-  //       console.error("Error fetching phones:", error);
-  //       setPhones([]);  // fallback to empty array
-  //     });
-  // }, []);
-  
-
   const handleSubmit = (e) => {
     e.preventDefault();
   const data = { phone, body, rate, seller, price, author };
@@ -287,7 +273,7 @@ function ReviewMobiles() {
       <div style={{ marginTop: '30px', textAlign: 'center' }}>
         <button className="btn btn-secondary me-2" onClick={goBack}>⬅️ Back</button>
         <button onClick={() => navigate('/edit-myreviews')} style={buttonStyle}>Edit My Reviews</button>
-        <button onClick={() => navigate('/review-list')} style={buttonStyle}>Review List</button>
+        <button onClick={() => navigate('/review-list')} style={buttonStyle}>📋Review List</button>
         <button onClick={() => navigate('/marketers-list')} style={buttonStyle}>Market List</button>
         <button onClick={() => navigate('/')} style={{ ...buttonStyle, backgroundColor: 'crimson' }}>Logout</button>
         <button className="btn btn-secondary" onClick={goForward}>➡️ Forward</button>

@@ -40,3 +40,34 @@
 .read-the-docs {
   color: #888;
 }
+
+
+
+/* 👑 Add these styles below — they’ll only apply to other pages */
+body {
+  background-color: #ffffff; /* bright white */
+  color: #007BFF; /* shiny blue */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #C71585; /* dark pink */
+}
+
+.btn {
+  color: #fff !important;
+}
+
+input, select, textarea {
+  color: #000 !important;
+}
+
+.custom-container {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(199, 21, 133, 0.1);
+}
+
+

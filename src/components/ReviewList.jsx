@@ -29,7 +29,7 @@ function ReviewList() {
     navigate(1);   // Go forward to next page
   };
 
-  const ITEMS_PER_PAGE = 7;
+  const ITEMS_PER_PAGE = 4;
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -60,6 +60,7 @@ function ReviewList() {
       })
       .catch((err) => console.error('Error fetching reviews:', err));
   }, [searchTerm]);
+
   const handleExport = (type) => {
     const headers = ['Author', 'Phone', 'Body', 'Seller', 'Price', 'Rate', 'Created', 'Updated'];
     const rows = reviews.map(r => [
