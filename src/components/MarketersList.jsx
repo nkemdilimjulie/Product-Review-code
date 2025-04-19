@@ -321,9 +321,9 @@ function MarketersList() {
     startY: 30,
     theme: "striped", // 'grid', 'plain', 'striped'
     styles: {
-      fontSize: 10,
+      fontSize: 4,
       textColor: 20,
-      cellPadding: 3,
+      cellPadding: 1,
     },
     headStyles: {
       fillColor: [255, 102, 178], // pinkish
@@ -420,7 +420,7 @@ function MarketersList() {
 
       <div className="mt-4">
         <button className="btn btn-danger me-2" onClick={() => handleExport('csv')}>Export to CSV</button>
-        <button onClick={() => navigate('/review-mobiles')} style={buttonStyle}>Review Mobiles</button>
+        <button onClick={() => navigate('/marketers')} style={buttonStyle}>Enter Market</button>
         <button className="btn btn-danger" onClick={() => handleExport('pdf')}>Export to PDF</button>
       </div>
       <div>
