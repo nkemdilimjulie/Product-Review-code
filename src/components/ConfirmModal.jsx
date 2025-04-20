@@ -99,11 +99,11 @@ const ConfirmModal = ({ show, onCancel, onConfirm, data }) => {
 
         <div style={{ marginTop: '20px', textAlign: 'right' }}>
           <button onClick={onCancel} style={cancelBtnStyle}>Cancel</button>
-          {/* <button onClick={onConfirm} style={submitBtnStyle}>Submit</button> */}
-          <button onClick={() => {
+          <button onClick={onConfirm} style={submitBtnStyle}>Yes, Submit</button>
+          {/* <button onClick={() => {
             console.log("Confirm button clicked");
             onConfirm();
-          }} style={submitBtnStyle}>Submit</button>
+          }} style={submitBtnStyle}>Submit</button> */}
 
         </div>
       </div>

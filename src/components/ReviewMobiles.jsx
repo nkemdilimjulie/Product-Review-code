@@ -194,8 +194,12 @@ function ReviewMobiles() {
   return (
     <div style={{ padding: '30px' }}>
       <h2 style={{ textAlign: 'center' }}>Review Mobiles</h2>
-      <p style={{ textAlign: 'center' }}>A user is allowed to review a specific mobile phone ONCE</p>
-      <p style={{ textAlign: 'center' }}>Moreover, check your review again before submission. You have no permission for updates</p>
+      <div style={{ textAlign: 'center' }} className="alert alert-danger alert-dismissible fade show" role="alert">
+        A user is allowed to review a specific mobile phone ONCE. <br />Moreover, edit review before submission. Remember, you have no permission for updates
+        <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <p style={{ textAlign: 'center' }}></p>
+      <p style={{ textAlign: 'center' }}></p>
 
       <div style={cardStyle}>
         <form onSubmit={handleSubmit}>
