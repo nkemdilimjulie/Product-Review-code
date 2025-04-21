@@ -94,42 +94,6 @@ function ReviewMobiles() {
     .finally(() => setShowModal(false));
   };
   
-  
-  // const confirmSubmission = () => {
-  //   const formData = { phone, body, rate, seller, price, author };
-  
-  //   fetch(`${API_DOMAIN}/api/reviews/`, { 
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Token ${localStorage.getItem('jwt_token')}`
-  //     },
-  //     body: JSON.stringify(formData)
-  //   })
-  //     .then(async (res) => {
-  //       const responseData = await res.json();
-  
-  //       if (!res.ok) {
-  //         toast.error('Submission Failed');
-  //         console.error('Error:', responseData);
-  //         setShowConfirm(false);
-  //         return;
-  //       }
-  
-  //       toast.success('Review is Successfully Submitted');
-  //       setPhone('');
-  //       setBody('');
-  //       setRate(1);
-  //       setSeller('');
-  //       setPrice('');
-  //       setShowConfirm(false);
-  //     })
-  //     .catch(err => {
-  //       toast.error('Error submitting review');
-  //       console.error(err);
-  //     });
-  // };
-  
 
   const buttonStyle = {
     margin: '8px',
@@ -198,9 +162,7 @@ function ReviewMobiles() {
         A user is allowed to review a specific mobile phone ONCE. <br />Moreover, edit review before submission. Remember, you have no permission for updates
         <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-      <p style={{ textAlign: 'center' }}></p>
-      <p style={{ textAlign: 'center' }}></p>
-
+     
       <div style={cardStyle}>
         <form onSubmit={handleSubmit}>
           <div>

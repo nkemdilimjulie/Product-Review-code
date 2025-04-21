@@ -73,10 +73,10 @@ const EditMyReviews = () => {
   return (
     <div className="container my-5">
       <h2 className="mb-3 text-primary">Edit My Reviews</h2>
-      <p className="text-muted">
-        Remember: You are only allowed to <strong>Delete</strong> your own entries. Updates are restricted.
-      </p>
-
+      <div style={{ textAlign: 'center' }} className="alert alert-danger alert-dismissible fade show" role="alert">
+      Remember: You are allowed to <strong>Delete</strong> only your own entries. Updates are restricted.
+        <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
       <div className="row">
         {/* Review List */}
         <div className="col-md-5 border-end pe-4" style={{ maxHeight: "400px", overflowY: "auto" }}>
@@ -178,13 +178,14 @@ const EditMyReviews = () => {
               </div>
             </div>
           ) : (
-            <p className="text-muted">Select a review from the left to edit.</p>
+            <p className="text-muted">Select a review to edit (from left).</p>
           )}
         </div>
       </div>
-
+        
       {/* Footer Buttons */}
       <div className="d-flex gap-3 mt-5">
+        
         <button
           className="btn btn-success"
           onClick={() => (window.location.href = "/review-mobiles")}
@@ -197,7 +198,9 @@ const EditMyReviews = () => {
         >
           Logout
         </button>
+        
       </div>
+      
     </div>
   );
 };
