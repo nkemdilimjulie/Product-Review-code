@@ -141,7 +141,7 @@ const AboutUs = () => {
           
         </div>
         <div className="mb-3">
-          <label className="form-label fw-bold">Feel @Home and Message Us - if you are logged in</label>
+          <label className="form-label fw-bold">Feel @Home and Message Us</label>
           <textarea name="message" className="form-control" rows="4" placeholder="Type your message here..." required></textarea>
         </div>
         <button type="submit" className="btn btn-primary w-100 fw-bold">📤 Send Message</button>
