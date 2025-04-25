@@ -1,3 +1,5 @@
+# Build Stage:----->
+
 # Use the official Node.js runtime as the base image
 FROM node:22 as build
 
@@ -15,6 +17,8 @@ COPY . .
 
 # Build the React app for production
 RUN npm run build
+
+# Serve Stage:----->
 
 # Use Nginx as the production server
 FROM nginx:alpine

@@ -124,5 +124,47 @@ Before running the frontend application, you need to install the necessary depen
 
 
 
+# Dockerize my Frontend:
+
+1) Dockerfile is created
+2) .dockerignore is created
+3) with this command
+
+```
+docker build -t react-nginx-app .
+
+```
+A Docker image is created, named 
+>react-nginx-app
+
+After building the image, you can check it exists and is tagged correctly:
+
+```
+docker images
+```
+
+
+## Run the Container of the Image built
+
+### option 1: without docker-compose - if no docker-compose file exists
+
+```
+docker run --name react-nginx-app -p 8080:80 -d react-nginx-app
+```
+
+
+### option 2: with docker-compose 
+In other to use this method to  run a container, first make sure a docker-compose file is created. Docker-compose helps to organise your ports in other to avoid port conflicts. 
+
+Then, your container this way.
+```
+docker-compose up --build
+```
+
+Use the port you specified in docker-compose file e.g. http://localhost:3000 to execute this app on a browser. The project app runs "normally" as before dockerization. But this time, your team members can also run your project app on their separate local machines, using the same path.
+
+
+
+
 
 
