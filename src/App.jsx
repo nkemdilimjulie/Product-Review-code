@@ -19,6 +19,7 @@ import ReviewListVertical from "./components/ReviewListVertical";
 import SubmitReview from "./components/SubmitReview"; 
 import ReviewList from "./components/ReviewList"; 
 import ReviewMobiles from "./components/ReviewMobiles";
+import SwaggerDoc from "./components/SwaggerDoc";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 
 
@@ -39,9 +40,10 @@ const App = () => {
 
           {/* Public Views */}
           <Route path="/marketers" element={<Marketers />} />
+          <Route path="/swagger" element={<SwaggerDoc />} />
           <Route path="/marketers-list" element={<MarketersList />} />
           <Route path="/marketers-list-vertical" element={<MarketersListVertical />} />
-          <Route path="/edit-myreviews" element={<EditMyReviews />} />
+          <Route path="/edit-reviews" element={<EditMyReviews />} />
           <Route path="/submit-review" element={<SubmitReview />} />
           <Route path="/review-list" element={<ReviewList />} />
           <Route path="/review-list-vertical" element={<ReviewListVertical />} />

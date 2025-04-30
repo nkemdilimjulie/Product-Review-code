@@ -11,8 +11,6 @@ const AboutUs = () => {
     e.preventDefault();
     const message = e.target.elements.message.value;
     
-    // Get the authentication token from localStorage (or sessionStorage, wherever it's stored)
-    // const token = localStorage.getItem("authToken"); // or change it to wherever you store the token. This section is necessary-- if you want the user to log in first before sending us a message 
     
     try {
       const res = await fetch(`${API_DOMAIN}/api/contact/`, {
@@ -69,6 +67,9 @@ const AboutUs = () => {
               <li className="nav-item">
                 <Link className="nav-link text-light" to="/about-us">About Us</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/swagger">Documentation</Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -95,7 +96,7 @@ const AboutUs = () => {
         <div className="col-md-4 mb-4">
           <div className="card shadow h-100">
             <img
-              src="/julie.jpeg"
+              src="/julie2.jpeg"
               className="card-img-top"
               alt="Julie"
               style={{ width: "100%", height: "auto" }}

@@ -76,6 +76,11 @@ function ReviewList() {
   
     if (type === 'pdf') {
       const doc = new jsPDF();
+      // Optional: Add a title
+      doc.setFontSize(18);
+      doc.setTextColor(40);
+      doc.text("Reviewers List", 14, 22);
+
       autoTable(doc, {
         head: [headers],
         body: rows,
@@ -88,6 +93,10 @@ function ReviewList() {
     }
   };
   
+    
+
+
+
   const buttonStyle = {
     margin: '8px',
     padding: '10px 20px',

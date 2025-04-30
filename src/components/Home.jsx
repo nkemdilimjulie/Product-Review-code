@@ -4,10 +4,7 @@ import { Link } from "react-router-dom";
 import "../styles.css";
 
 const Home = () => {
-  // localStorage.removeItem("user");
-  // logout(); // if using AuthContext
-  // // navigate("/login");
-
+  
   return (
     <div className="container">
       {/* Navigation Bar */}
@@ -30,6 +27,9 @@ const Home = () => {
               <li className="nav-item">
                 <Link className="nav-link" to="/aboutus">About Us</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/swagger">Documentation</Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -44,7 +44,7 @@ const Home = () => {
       {/* Hero Section */}
       <div className="hero-section text-center">
         <h1>Welcome to our Product Review Community</h1>
-        <p className="text-muted">A TarasJulie Product Selection Scheme</p>
+        <p className="text-muted">A TarasJulie Product Review Scheme</p>
       </div>
 
       {/* Feature Cards Section */}

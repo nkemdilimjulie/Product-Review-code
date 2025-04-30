@@ -68,7 +68,10 @@ const Login = () => {
 
   return (
     <div className="container mt-4">
-      {/* Logout Button if Authenticated */}
+      <div style={{ textAlign: 'center' }} className="alert alert-danger alert-dismissible fade show" role="alert">
+        Logout Button displays if user is Authenticated and logged in
+        <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
       {isAuthenticated && (
         <div className="d-flex justify-content-end">
           <button className="btn btn-outline-danger mb-3" onClick={handleLogout}>
