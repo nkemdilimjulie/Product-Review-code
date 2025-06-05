@@ -79,7 +79,7 @@ const AboutUs = () => {
       <div className="text-center">
         <h2 className="fw-bold mb-3">About Us</h2>
         <p className="lead">
-          Our company name is <strong>TarasJulie Product Review Scheme</strong>. We bring marketers and buyers together 
+          Our team name is <strong>TarasJulie Product Review Scheme</strong>. We bring marketers and buyers together 
           by hosting product reviews.</p>
         <p>In the future, we plan to include reviews for laptops, cars, and other electronic products.</p>
          
@@ -103,7 +103,7 @@ const AboutUs = () => {
             />
             <div className="card-body text-center">
               <h5 className="card-title fw-bold">Nkemdilim Julie Chime</h5>
-              <p className="card-text">Python Backend Developer</p>
+              <p className="card-text">Full Stack Developer</p>
               <p className="card-text text-muted">Handles the Frontend Operations</p>
             </div>
           </div>

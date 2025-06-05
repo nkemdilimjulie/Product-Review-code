@@ -238,7 +238,7 @@ function ReviewMobiles() {
       {/* Navigation Buttons */}
       <div style={{ marginTop: '30px', textAlign: 'center' }}>
         <button className="btn btn-secondary me-2" onClick={goBack}>⬅️ Back</button>
-        <button onClick={() => navigate('/edit-myreviews')} style={buttonStyle}>Edit My Reviews</button>
+        {/* <button onClick={() => navigate('/edit-myreviews')} style={buttonStyle}>Edit My Reviews</button> */}
         <button onClick={() => navigate('/review-list')} style={buttonStyle}>📋Review List</button>
         <button onClick={() => navigate('/marketers-list')} style={buttonStyle}>Market List</button>
         <button onClick={() => navigate('/')} style={{ ...buttonStyle, backgroundColor: 'crimson' }}>Logout</button>

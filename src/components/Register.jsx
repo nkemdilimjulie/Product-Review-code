@@ -13,15 +13,15 @@ const Register = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Reset form fields when the component loads
-    setUsername("");
-    setPassword1("");
-    setPassword2("");
-    setIsMarketer(false);
-    setError("");
-    setSuccess("");
-  }, []);
+  // useEffect(() => {
+  //   // Reset form fields when the component loads
+  //   setUsername("");
+  //   setPassword1("");
+  //   setPassword2("");
+  //   setIsMarketer(false);
+  //   setError("");
+  //   setSuccess("");
+  // }, []);
 
   const { isAuthenticated, logout } = useAuth();  // ✅ Use auth context
 

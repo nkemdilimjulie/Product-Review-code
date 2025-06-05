@@ -163,6 +163,7 @@ docker-compose up --build
 
 Use the port you specified in docker-compose file e.g. http://localhost:3000 to execute this app on a browser. The project app runs "normally" as before dockerization. But this time, your team members can also run your project app on their separate local machines, using the same path.
 
+![DirectMe](src/assets/README_for_all_projects.png)
 
 
 

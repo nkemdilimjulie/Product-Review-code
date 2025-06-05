@@ -62,14 +62,22 @@ function MarketersList() {
       .catch((err) => console.error('Error fetching marketers:', err));
   }, [searchTerm]);
    
-  const handleExport = () => {
-    const doc = new jsPDF();
+  const handleExport = (type) => {
+    const headers = ['Author', 'Phone', 'Company', 'Link'];
+    const rows = marketers.map(r => [
+      r.author,
+      r.phone,
+      r.company,
+      r.link || 'N/A'
+      
+    ]);
 
+  if (type === 'pdf') {
+    const doc = new jsPDF();
     // Optional: Add a title
     doc.setFontSize(18);
     doc.setTextColor(40);
     doc.text("Marketers List", 14, 22);
-
     // Define columns and rows
     const columns = [
       { header: "Author", dataKey: "author" },
@@ -83,44 +91,36 @@ function MarketersList() {
       phone: marketer.phone,
       company: marketer.company,
       link: marketer.link,
-  }));
-
-  // AutoTable
-  autoTable(doc, {
-    columns,
-    body: rows,
-    startY: 30,
-    theme: "striped", // 'grid', 'plain', 'striped'
-    styles: {
-      fontSize: 4,
-      textColor: 20,
-      cellPadding: 1,
-    },
-    headStyles: {
-      fillColor: [255, 102, 178], // pinkish
-      textColor: [255, 255, 255],
-      fontStyle: 'bold',
-    },
-    alternateRowStyles: {
-      fillColor: [245, 245, 245],
-    },
-    margin: { top: 30 },
-  });
-
-  // Optional: Add footer
-  const pageCount = doc.internal.getNumberOfPages();
-  for (let i = 1; i <= pageCount; i++) {
-    doc.setPage(i);
-    doc.setFontSize(10);
-    doc.text(`Page ${i} of ${pageCount}`, 180, 290, { align: 'right' });
+    }));
+    // AutoTable
+    autoTable(doc, {
+      columns,
+      body: rows,
+      startY: 30,
+      theme: "striped", // 'grid', 'plain', 'striped'
+      styles: {
+        fontSize: 4,
+        textColor: 20,
+        cellPadding: 1,
+      },
+      headStyles: {
+        fillColor: [255, 102, 178], // pinkish
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+      margin: { top: 30 },
+    });
+    doc.save('marketers.pdf');
+  } else {
+    const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'marketers.csv');
   }
-
-  // Save the PDF
-  doc.save("marketers_list.pdf");
 };
 
-
-  
   const buttonStyle = {
     margin: '8px',
     padding: '10px 20px',
