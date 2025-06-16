@@ -1,4 +1,88 @@
-(Please, see the Project Flow towards the bottom of this page)
+# 🛍️ Product Review Code – React Frontend
+
+This is a **React-based frontend** for the [GROUP_PROJECT_DJANGO_REST_API](https://github.com/Mrt0090/Group_Project_Django_rest_API) project. It allows users to register, log in, and submit or view product reviews. The app communicates with the Django REST API backend to fetch and persist data.
+
+---
+
+## 📦 Tech Stack
+
+- **Frontend**: React (JavaScript), React Router, Fetch API / Axios
+- **Backend**: Django REST Framework ([see backend repo](https://github.com/Mrt0090/Group_Project_Django_rest_API))
+- **Authentication**: Token-based (DRF TokenAuth or JWT)
+- **Styling**: CSS / Bootstrap / Tailwind (customize as applicable)
+
+---
+
+## ✨ Features
+
+- 🔐 User Registration & Login
+- 📝 Submit Product Reviews
+- 📱 View & Filter Reviews
+- 🏷️ Add Product Metadata (brands, models, sellers)
+- 🔍 Search, Sort, and Pagination (if implemented)
+- 💬 Authenticated-only actions (review, edit, delete)
+- 🧭 Navigation between views
+
+---
+
+## 📁 Project Structure
+
+product-review-code/
+
+├── public/
+
+├── src/
+
+│ ├── components/ # Reusable components
+
+│ ├── pages/ # Home, Login, Review, etc.
+
+│ ├── services/ # API logic (fetch/axios)
+
+│ ├── App.js # Main router
+
+│ ├── index.js
+
+├── .env # Backend API URL config
+
+├── package.json
+
+└── README.md
+
+## Project Flowchart
+### Product-Review Flowchart
+
+![alt text](public/review_flowchart.png)
+
+
+---
+
+## ⚙️ Setup Instructions
+
+### 🔐 Prerequisites
+
+- Node.js v14+
+- A running instance of the Django backend
+- Backend must support CORS (`django-cors-headers`)
+
+### 🔧 Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/nkemdilimjulie/Product-Review-code.git
+cd product-review-code
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm start
+```
+🔑 Authentication
+This project uses token-based authentication.
+
+
+
 
 # Setup 
 
@@ -97,9 +181,6 @@ Before running the frontend application, you need to install the necessary depen
    - **What this does**: This runs the `dev` script defined in the `package.json` file
 
 
-## Product-Review Flowchart
-
-![alt text](public/review_flowchart.png)
 
 ## Get Help
 
@@ -121,7 +202,20 @@ Before running the frontend application, you need to install the necessary depen
 
 7. So, if you register as a marketer **`(see no. 6 above)`**, you shall be directed to **`Marketers`** page. Here you shall be able to enter your company's name and link. But remember to select the phone you want to advertise.
 
+## 📱 Available Pages / Components
+Home – General info and call to action
 
+Login/Register – Auth flow
+
+ReviewForm – Add a new review
+
+ReviewList – Browse all reviews
+
+EditReview – Edit or delete existing reviews
+
+Marketers – Add marketers and link them to products
+
+Navigation – Buttons for Logout, SubmitReview, MarketList, ReviewList, etc.
 
 
 # Dockerize my Frontend:
@@ -163,7 +257,19 @@ docker-compose up --build
 
 Use the port you specified in docker-compose file e.g. http://localhost:3000 to execute this app on a browser. The project app runs "normally" as before dockerization. But this time, your team members can also run your project app on their separate local machines, using the same path.
 
-![DirectMe](src/assets/README_for_all_projects.png)
+<!-- ![DirectMe](src/assets/README_for_all_projects.png) -->
+
+## 🚀 Deployment
+To build for production:
+
+```
+npm run build
+```
+
+Then deploy via Netlify, Vercel, or GitHub Pages.
+
+📄 License
+This project is licensed under the MIT License. 
 
 
 
